@@ -19,6 +19,7 @@
   "homepage": "https://github.com/MattsAb/Activity-manager#readme",
   "workspaces": [
     "apps/frontend",
-    "packages/types"
+    "packages/types",
+    "apps/api"
   ]
 }
