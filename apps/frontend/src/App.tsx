@@ -1,0 +1,24 @@
+import { Route, Routes } from "react-router-dom"
+import MainPage from "./pages/MainPage"
+import ActivityPage from "./pages/ActivityPage"
+import SettingsPage from "./pages/SettingsPage"
+import AuthPage from "./pages/AuthPage"
+import ProtectedRoutes from "./utils/protectedRoutes"
+import AppLayout from "./utils/AppLayout"
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/signin" element={<AuthPage/>}/>
+      <Route element={<ProtectedRoutes/>}>
+        <Route element={<AppLayout/>}>
+          <Route path="/" element={<MainPage/>}/>
+          <Route path="/activity" element={<ActivityPage/>}/>
+          <Route path="/settings" element={<SettingsPage/>}/>
+        </Route>
+      </Route>
+    </Routes>
+  )
+}
+
+export default App
