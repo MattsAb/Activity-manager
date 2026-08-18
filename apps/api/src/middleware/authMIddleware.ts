@@ -23,7 +23,7 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
     }   
 
     req.userId = decoded.id
-    next()
+    return next()
   } catch {
     console.log("invalid token")
     return res.status(401).json({ message: "Invalid token" })

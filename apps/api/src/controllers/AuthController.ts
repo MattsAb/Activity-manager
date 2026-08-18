@@ -61,3 +61,19 @@ export async function register(req: Request, res: Response) {
 
     return res.status(201).json({succes: true, data: token})
 } 
+
+export async function getMe(req: Request, res: Response) {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: req.userId
+        },
+        select: {
+            id: true,
+            username: true,
+            avatarUrl: true
+        }
+    })
+    if (!user) throw new ServerError(404, "Not found")
+
+    res.status(200).json({success: true, data: user})
+}
