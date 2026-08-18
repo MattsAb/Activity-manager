@@ -1,5 +1,9 @@
+import { useAuth } from "../context/AuthContext";
 
 function SettingsPage() {
+
+    const {logout} = useAuth()
+
 
     const root = document.documentElement;
 
@@ -16,7 +20,7 @@ function SettingsPage() {
 
     return (
         <div className="w-full">
-            <div className="flex gap-3 p-5">
+            <div className="flex gap-3">
                 <button className="bg-lighttheme-2 hover:bg-lighthover-1 dark:bg-darktheme-3 hover:dark:bg-darkhover-1 rounded-full px-2 py-1 cursor-pointer"
                 >
                     Dark
@@ -26,7 +30,13 @@ function SettingsPage() {
                 >
                     Light
                 </button>
+                
             </div>
+            <button className="bg-lighttheme-2 hover:bg-lighthover-1 dark:bg-darktheme-3 hover:dark:bg-darkhover-1  px-2 py-1 rounded-xl cursor-pointer"
+                onClick={() => logout()}
+            >
+                Log Out
+            </button>
         </div>
     )
 }

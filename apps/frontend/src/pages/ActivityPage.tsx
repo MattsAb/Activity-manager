@@ -1,10 +1,14 @@
 import { useState } from "react"
 import MessageComponent from "../components/activity_components/MessageComponent"
+import type { Message } from "@activity-manager/types"
+import { useAuth } from "../context/AuthContext"
 
 function ActivityPage() {
 
     const [input, setInput] = useState('')
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState<Message[]>([])
+
+    const {user} = useAuth()
 
     return (
         <div className="h-screen w-full flex flex-col">
@@ -19,7 +23,7 @@ function ActivityPage() {
                     {messages && messages.map((message) => (
                         <MessageComponent
                             body={message.body}
-                            type={message.userId == id ? 'user' : 'other'}
+                            type={message.userId == user?.id ? 'user' : 'other'}
                         />
                     ))}
                 </div>

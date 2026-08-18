@@ -31,10 +31,10 @@ export async function login(req: Request, res: Response) {
     if (!passwordIsValid) throw new ServerError(401,"Invalid password")
 
     const token = createToken(user as BackendUser)
-    res.status(200).json({ token })
+
     if (!user) throw new ServerError(404, 'wrong email or password')
     
-    return res.status(200).json({success: true, data: user})
+    return res.status(200).json({success: true, data: token})
 
 }
 
@@ -59,7 +59,7 @@ export async function register(req: Request, res: Response) {
 
     const token = createToken(new_user as BackendUser)
 
-    return res.status(201).json({succes: true, data: token})
+    return res.status(201).json({success: true, data: token})
 } 
 
 export async function getMe(req: Request, res: Response) {

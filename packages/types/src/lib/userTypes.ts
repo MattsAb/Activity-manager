@@ -1,7 +1,7 @@
 export interface FrontendUser {
     id: string
     username: string
-    avatarUrl?: string
+    avatarUrl: string
 }
 
 export interface BackendUser {

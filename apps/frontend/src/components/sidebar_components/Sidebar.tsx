@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import ActivityPanel from "./ActivityPanel";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Sidebar() {
 
     const [isOpen, setIsOpen] = useState(true)
 
     const navigate = useNavigate()
+    const {user} = useAuth()
 
     const goToSettings = () => navigate('/settings')
 
@@ -26,7 +28,7 @@ function Sidebar() {
                             >
 
                             </button>
-                            <h1 className={`font-semibold hidden ${isOpen && 'lg:block'}`}> Username </h1>
+                            <h1 className={`font-semibold hidden ${isOpen && 'lg:block'}`}> {user?.username} </h1>
                         </div>
                         <button 
                             onClick={() => setIsOpen(!isOpen)}
