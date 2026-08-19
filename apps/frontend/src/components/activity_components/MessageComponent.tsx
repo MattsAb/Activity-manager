@@ -2,19 +2,33 @@ import { EllipsisHorizontalIcon, CheckIcon, XMarkIcon } from "@heroicons/react/2
 import MessageModal from "./MessageModal"
 import { useEffect, useRef, useState } from "react"
 import imgtest from "../../../public/favicon.svg"
+import type { Message } from "@activity-manager/types"
+import { socket } from "../../utils/socket"
 
 type MessageProps = {
     type: "user" | "other"
-    body: string
+    message: Message
 }
 
-function MessageComponent({type, body}: MessageProps) {
+function MessageComponent({type, message}: MessageProps) {
 
     const [modalOpen, setModalOpen] = useState(false)
     const [editValue, setEditValue] = useState('')
     const [inEdit, setInEdit] = useState(false)
 
     const ref = useRef<HTMLDivElement>(null)
+
+    const message_date = new Date(message.createdAt)
+    const today_date = new Date()
+    
+    function getTime(): string {
+        const time = today_date.getTime()- message_date.getTime()
+        if (time > 60 * 60 * 60 * 1000) {
+            return`${message_date.toLocaleDateString()}`
+        } else {
+            return message_date.toLocaleTimeString("it-IT")
+        }
+    }
      
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
@@ -32,33 +46,38 @@ function MessageComponent({type, body}: MessageProps) {
     }, [modalOpen, inEdit]);
 
     async function handleEdit() {
-
+        if (editValue === "" || editValue === message.body) return
+        socket.emit('edit_message', { body: editValue, activityId: message.activityId, id: message.id})
     }
-    async function handleDelete() {
 
+    async function handleDelete() {
+        socket.emit('delete_message', {activityId: message.activityId, id: message.id})
     }
 
     return (
             <div ref={ref} className={`flex gap-3 max-w-1/2  ${type == "user" && 'self-end'}`}>
-                <div className={`${type == "user" ? "dark:bg-app-2 bg-app-1 self-end text-white" : "dark:bg-darktheme-1 bg-lighttheme-2"} rounded-3xl p-3 items-center flex gap-3`}>
+                <div className="flex flex-col">
+                    <div className={`${type == "user" ? "dark:bg-app-2 bg-app-1 self-end text-white" : "dark:bg-darktheme-1 bg-lighttheme-2"} rounded-3xl p-3 items-center flex gap-3`}>
 
-                    { !inEdit ? (
-                        <>
-                            {type == "other" && <img src={imgtest} className="w-5 h-5"/>}
-                            <p>{body}</p>
-                        </>
-                    ) : (
-                        <textarea
-                            className="dark:bg-darktheme-2 wrap-break-word min-w-0 w-full rounded-2xl py-1 px-2 outline-none scrollbar-none"
-                            value={editValue}
-                            onChange={(e) => setEditValue(e.target.value)}
-                        />
-                    )}
-
+                        { !inEdit ? (
+                            <div className="flex gap-3">
+                                {type == "other" && <img src={imgtest} className="w-5 h-5"/>}
+                                <p>{message.body}</p>
+                            </div>
+                        ) : (
+                            <textarea
+                                className="dark:bg-darktheme-2 bg-lighttheme-1 dark:text-white text-black wrap-break-word min-w-0 w-full rounded-2xl py-1 px-2 outline-none scrollbar-none"
+                                value={editValue}
+                                onChange={(e) => setEditValue(e.target.value)}
+                            />
+                        )}
+                    </div>
+                    <p className={`text-sm dark:text-mist-400 ${type === "user" ? "self-end" : "self-start"}`}>{`${getTime()}`}</p>
                 </div>
+                
                 {type == "user" && !inEdit && 
                         <button
-                            className="rounded-full h-8 w-8 p-1 bg-darktheme-2 relative flex items-center justify-center cursor-pointer"
+                            className="rounded-full h-8 w-8 p-1 dark:bg-darktheme-2 bg-lighttheme-2 relative flex items-center justify-center cursor-pointer"
                             onClick={() => setModalOpen(!modalOpen)}
                             >
                             <EllipsisHorizontalIcon className="h-6= w-6"/>
@@ -66,7 +85,7 @@ function MessageComponent({type, body}: MessageProps) {
                                 isOpen={modalOpen} 
                                 select={() => {
                                     setInEdit(true)
-                                    setEditValue(body)
+                                    setEditValue(message.body)
                                 }}
                                 deleteMessage={() => handleDelete()}
                             />
@@ -75,7 +94,7 @@ function MessageComponent({type, body}: MessageProps) {
                 {type == "user" && inEdit &&
                         <div className="flex gap-2">
                             <button
-                                className="rounded-full h-8 w-8 bg-darktheme-2 relative flex items-center justify-center cursor-pointer"
+                                className="rounded-full h-8 w-8 dark:bg-darktheme-2 bg-lighttheme-2 relative flex items-center justify-center cursor-pointer"
                                 onClick={() => {
                                     handleEdit()
                                     setInEdit(false)
@@ -85,7 +104,7 @@ function MessageComponent({type, body}: MessageProps) {
                             </button>
 
                             <button
-                                className="rounded-full h-8 w-8 bg-darktheme-2 relative flex items-center justify-center cursor-pointer"
+                                className="rounded-full h-8 w-8 dark:bg-darktheme-2 bg-lighttheme-2 relative flex items-center justify-center cursor-pointer"
                                 onClick={() => {
                                     setInEdit(false)
                                 }}

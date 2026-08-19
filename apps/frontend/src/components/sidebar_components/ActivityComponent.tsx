@@ -10,7 +10,7 @@ function ActivityComponent({user, sidebarMode}: ActiviyProps) {
 
     const navigate = useNavigate()
 
-    const goToActivity = () => navigate(`/activity`)
+    const goToActivity = () => navigate(`/activity/${user.id}`)
 
     return (
         <button 

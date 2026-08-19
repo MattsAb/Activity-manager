@@ -28,18 +28,18 @@ function SearchPage() {
                 <h1 className="text-2xl font-semibold"> Find Friends </h1>
                 <div className="flex gap-3">
                     <input 
-                        className="dark:bg-darktheme-2 rounded-2xl outline-none p-2"
+                        className="dark:bg-darktheme-2 dark:border-none border rounded-2xl outline-none p-2"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                     />
-                    <button className="dark:bg-darktheme-2 px-2 rounded-2xl cursor-pointer hover:dark:bg-darkhover-1"
+                    <button className="dark:bg-darktheme-2 bg-lighttheme-2 px-2 rounded-2xl cursor-pointer hover:dark:bg-darkhover-1 hover:bg-lighthover-1"
                         onClick={() => handleSearch()}
                     >
                         Search
                     </button>
                 </div>
             </div>
-            { users.length > 0 &&  <div className="dark:bg-darktheme-3 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 w-1/2 h-1/2 rounded-2xl">
+            { users.length > 0 &&  <div className="dark:bg-darktheme-3 bg-lighttheme-2 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 w-1/2 h-1/2 rounded-2xl">
 
                 {users.map((user) => (
                     <UserComponent

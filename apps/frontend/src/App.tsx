@@ -16,7 +16,7 @@ function App() {
       <Route element={<ProtectedRoutes/>}>
         <Route element={<AppLayout/>}>
           <Route path="/" element={<MainPage/>}/>
-          <Route path="/activity" element={<ActivityPage/>}/>
+          <Route path="/activity/:id" element={<ActivityPage/>}/>
           <Route path="/settings" element={<SettingsPage/>}/>
           <Route path="/search" element={<SearchPage/>}/>
           <Route path="/requests" element={<RequestPage/>}/>

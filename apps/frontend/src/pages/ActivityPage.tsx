@@ -1,44 +1,89 @@
 import { useEffect, useState } from "react"
 import MessageComponent from "../components/activity_components/MessageComponent"
-import type { Message } from "@activity-manager/types"
+import type { Activity, Message } from "@activity-manager/types"
 import { useAuth } from "../context/AuthContext"
 import { socket } from "../utils/socket"
+import { useParams } from "react-router-dom"
+import { getActivity } from "../utils/services/activity.api"
+import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent"
 
 function ActivityPage() {
 
     const [input, setInput] = useState('')
     const [messages, setMessages] = useState<Message[]>([])
+    const [activity, setActivity] = useState<Activity>()
+
+    const [errorMessage, setErrorMessage] = useState('')
 
     const {user} = useAuth()
 
-    useEffect(() => {
-        async function connectToActivity() {
-            socket.emit('connection', 1)
+    const { id } = useParams();
+
+  useEffect(() => {
+    setErrorMessage('')
+    if (!id) return
+
+    async function connectToActivity() {
+        const result = await getActivity(id)
+        if (result.success && result.data) {
+            setActivity(result.data)
+            setMessages(result.data.messages)
+            socket.emit('join_channel', result.data.id)
+        } else if (result.error) {
+            setErrorMessage(result.error)
         }
-        connectToActivity()
-    },[])
+    }
+
+    connectToActivity()
+
+    socket.on('new_message', (message) => {
+        setMessages(prev => [...prev, message])
+    })
+
+    socket.on('edited_message', (message) => {
+        console.log(message)
+        setMessages(prev => prev.map(m => m.id === message.id ? message : m))
+    })
+
+    socket.on('deleted_message', (message) => {
+        setMessages(prev => prev.filter(m => m.id !== message.id))
+    })
+
+    return () => {
+        socket.emit('leave_channel', id)
+        socket.off('new_message')
+        socket.off('edited_message')
+        socket.off('deleted_message')
+    }
+}, [id])
 
     async function handleMessage() {
-        socket.emit('send_message', input)
+        if (!activity?.id || !input.trim()) return
+        socket.emit('send_message', { body: input, activityId: activity.id })
+        setInput('')
     }
 
     return (
         <div className="h-screen w-full flex flex-col">
             <div className="w-full dark:bg-darktheme-3 bg-lighttheme-2 p-5 shrink-0">
-                <h1 className="font-semibold text-2xl">
-                    Activity Title
-                </h1>
+                <div className="font-semibold text-2xl flex gap-3">
+                    {activity?.users.map((user) => (
+                        <h1>{user.username}</h1>
+                    )) }
+                </div>
             </div>
 
             <div className="flex-1 min-h-0 flex flex-col items-center">
                 <div className="flex-1 border-x border-darktheme-2 flex flex-col-reverse gap-4 w-full lg:w-2/3 p-5 min-h-0 overscroll-contain overflow-y-auto scrollbar-none">
-                    {messages && messages.map((message) => (
+                    {messages && [...messages].reverse().map((message) => (
                         <MessageComponent
-                            body={message.body}
+                            key={message.id}
+                            message={message}
                             type={message.userId == user?.id ? 'user' : 'other'}
                         />
                     ))}
                 </div>
+                <ErrorMessageComponent errorMessage={errorMessage}/>
             </div>
             
             <div className="justify-center flex flex-col border-t dark:border-darktheme-1 dark:bg-darktheme-4 bg-lighttheme-2 shrink-0">

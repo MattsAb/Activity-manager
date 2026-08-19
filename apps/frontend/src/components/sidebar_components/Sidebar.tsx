@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import ActivityPanel from "./ActivityPanel";
 import { useAuth } from "../../context/AuthContext";
@@ -15,6 +15,21 @@ function Sidebar() {
     const [moreOptions, setMoreOptions] = useState(false)
 
     const {user} = useAuth()
+
+    const ref = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        function handleClickOutside(e: MouseEvent) {
+            const target = e.target as Node;
+            const clickedInsideMenu = ref.current?.contains(target);
+
+            if (!clickedInsideMenu) {
+                setMoreOptions(false);
+            }
+        }
+        if (isOpen) document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [moreOptions]);
 
     useEffect(() => {
         async function fetchFriends() {
@@ -38,8 +53,8 @@ function Sidebar() {
                 `}>
                 <div className="flex-col flex items-center w-full h-screen pt-2 px-2 gap-3">
                     <div className={`flex w-full items-center justify-between gap-3`}>
-                        <div className="flex gap-3 items-center justify-center">
-                            <button 
+                        <div ref={ref} className="flex gap-3 items-center justify-center">
+                            <button
                                 className="bg-slate-600 h-8 w-8 rounded-full cursor-pointer"
                                 onClick={() => setMoreOptions(!moreOptions)}
                             >

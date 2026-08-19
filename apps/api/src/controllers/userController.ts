@@ -20,7 +20,7 @@ export async function addFriend(req: Request, res: Response) {
 
     if (!request) throw new ServerError(404, "No request from this user")
 
-    await prisma.request.update({
+    const updated_request = await prisma.request.update({
         where: {
             senderId_receiverId: {
                 senderId: userId,
@@ -30,6 +30,16 @@ export async function addFriend(req: Request, res: Response) {
         data: { status: "ACCEPTED" }
     })
 
+    await prisma.activity.create({
+        data: {
+            users: {
+                connect: [
+                    { id: updated_request.receiverId },
+                    { id: updated_request.senderId }
+                ]
+            }
+        }
+    })
     return res.status(200).json({success: true})
 }
 

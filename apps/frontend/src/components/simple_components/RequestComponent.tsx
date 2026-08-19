@@ -38,7 +38,7 @@ function RequestComponent({user}: UserComponentProps) {
             </div>
             <ErrorMessageComponent errorMessage={errorMessage}/>
             <div
-                className="flex gap-3"
+                className="flex gap-3 text-white"
             >
                 <button 
                     className={`font-semibold "bg-app-2 p-3 bg-app-2 hover:bg-apphover-1 cursor-pointer rounded-full flex justify-self-end`}
