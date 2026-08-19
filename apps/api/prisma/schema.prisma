@@ -17,6 +17,9 @@ model User {
 
   messages Message[]
   activities Activity[]
+
+  sentRequests     Request[] @relation("SentFriendRequests")
+  receivedRequests Request[] @relation("ReceivedFriendRequests")
 }
 
 model Message {
@@ -35,4 +38,23 @@ model Activity {
 
   messages Message[]
   users User[]
+}
+
+model Request {
+  id         String        @id @default(uuid()) @db.Uuid
+  status     RequestStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+
+  senderId   String @db.Uuid
+  sender     User   @relation("SentFriendRequests", fields: [senderId], references: [id], onDelete: Cascade)
+
+  receiverId String @db.Uuid
+  receiver   User   @relation("ReceivedFriendRequests", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
 }
