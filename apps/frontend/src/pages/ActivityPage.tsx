@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import MessageComponent from "../components/activity_components/MessageComponent"
 import type { Message } from "@activity-manager/types"
 import { useAuth } from "../context/AuthContext"
+import { socket } from "../utils/socket"
 
 function ActivityPage() {
 
@@ -9,6 +10,17 @@ function ActivityPage() {
     const [messages, setMessages] = useState<Message[]>([])
 
     const {user} = useAuth()
+
+    useEffect(() => {
+        async function connectToActivity() {
+            socket.emit('connection', 1)
+        }
+        connectToActivity()
+    },[])
+
+    async function handleMessage() {
+        socket.emit('send_message', input)
+    }
 
     return (
         <div className="h-screen w-full flex flex-col">
@@ -38,7 +50,9 @@ function ActivityPage() {
                         rows={2}
                     />
 
-                    <button className="dark:bg-app-2 bg-app-1 hover:dark:bg-apphover-1 text-white p-3 rounded-full font-semibold cursor-pointer">
+                    <button className="dark:bg-app-2 bg-app-1 hover:dark:bg-apphover-1 text-white p-3 rounded-full font-semibold cursor-pointer"
+                        onClick={() => handleMessage()}
+                    >
                         Send
                     </button>
                 </div>

@@ -1,6 +1,7 @@
 import type { ApiResponse, FrontendUser } from '@activity-manager/types';
 import { createContext, useContext, useEffect, useState} from 'react';
 import { getMe } from '../utils/services/auth.api';
+import { socket } from '../utils/socket';
 
 type AuthContextType = {
     user: FrontendUser |  null
@@ -31,6 +32,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
         }
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            socket.auth = { token: localStorage.getItem('idToken') }
+            socket.connect()
+            return () => { socket.disconnect() }
+        }
+    }, [user])
 
     const saveUser = async (token: string): Promise<ApiResponse<null>> => {
         localStorage.setItem('idToken', token)
