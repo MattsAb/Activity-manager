@@ -6,6 +6,7 @@ import AuthPage from "./pages/AuthPage"
 import ProtectedRoutes from "./utils/protectedRoutes"
 import AppLayout from "./utils/AppLayout"
 import SearchPage from "./pages/SearchPage"
+import RequestPage from "./pages/RequestPage"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/activity" element={<ActivityPage/>}/>
           <Route path="/settings" element={<SettingsPage/>}/>
           <Route path="/search" element={<SearchPage/>}/>
+          <Route path="/requests" element={<RequestPage/>}/>
         </Route>
       </Route>
       

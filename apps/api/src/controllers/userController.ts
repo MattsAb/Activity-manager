@@ -71,6 +71,8 @@ export async function sendRequest(req: Request, res: Response) {
         throw new ServerError(404, "Not Found")
     }
 
+    if (userId == req.userId) throw new ServerError(403, 'Forbidden')
+
     const request = await prisma.request.findUnique({
         where: {
             senderId_receiverId: {
@@ -121,3 +123,49 @@ export async function getFriends(req: Request, res: Response) {
     return res.status(200).json({success: true, data: friends})
 }
 
+export async function getRequests(req: Request, res: Response) {
+    const userId = req.userId
+
+    const requests = await prisma.request.findMany({
+        where: {
+            status: "PENDING",
+            receiverId: userId
+        },
+        include: {
+            sender: true,
+            receiver: true
+        }
+    })
+
+    const friends = requests.map((request) => {
+            return {
+                id: request.sender.id,
+                username: request.sender.username,
+                avatarUrl: request.sender.avatarUrl
+            }
+        })
+
+    return res.status(200).json({success: true, data: friends})
+}
+
+export async function getSearch(req: Request, res: Response) {
+
+    const search = req.query.q
+
+    if (!search || typeof search !== "string") throw new ServerError(400, "Search query required")
+
+    const users = await prisma.user.findMany({
+        where: {
+            username: {contains: search, mode: "insensitive"}
+        },
+        select:
+        {
+            username: true,
+            id: true,
+            avatarUrl: true
+        }
+    })
+
+    return res.status(200).json({success: true, data: users})
+
+}

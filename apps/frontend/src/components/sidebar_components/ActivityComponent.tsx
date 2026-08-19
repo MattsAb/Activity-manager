@@ -1,6 +1,12 @@
+import type { FrontendUser } from "@activity-manager/types"
 import { useNavigate } from "react-router-dom"
 
-function ActivityComponent() {
+type ActiviyProps = {
+    user: FrontendUser
+    sidebarMode: "SMALL" | "LARGE"
+}
+
+function ActivityComponent({user, sidebarMode}: ActiviyProps) {
 
     const navigate = useNavigate()
 
@@ -12,6 +18,7 @@ function ActivityComponent() {
             onClick={() => goToActivity()}
             >
             <div className="w-20 h-20 dark:bg-mist-700 rounded-full"/>
+            {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">{user.username}</h1> }
         </button>
     )
 }

@@ -1,17 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import ActivityPanel from "./ActivityPanel";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import MoreOptionsModal from "./MoreOptionsModal";
+import { getFriends } from "../../utils/services/user.api";
+import type { FrontendUser } from "@activity-manager/types";
 
 function Sidebar() {
 
-    const [isOpen, setIsOpen] = useState(true)
+    const [friends, setFriends] = useState<FrontendUser[]>([])
+    const [errorMessage, setErrorMessage] = useState('')
 
-    const navigate = useNavigate()
+    const [isOpen, setIsOpen] = useState(true)
+    const [moreOptions, setMoreOptions] = useState(false)
+
     const {user} = useAuth()
 
-    const goToSettings = () => navigate('/settings')
+    useEffect(() => {
+        async function fetchFriends() {
+            const result = await getFriends()
+            if (result.success && result.data) {
+                setFriends(result.data)
+            } else if(result.error) {
+                setErrorMessage(result.error)
+            }
+
+        }
+        fetchFriends()
+    })
+
 
     return (
         <>
@@ -24,10 +41,10 @@ function Sidebar() {
                         <div className="flex gap-3 items-center justify-center">
                             <button 
                                 className="bg-slate-600 h-8 w-8 rounded-full cursor-pointer"
-                                onClick={() => goToSettings()}
+                                onClick={() => setMoreOptions(!moreOptions)}
                             >
-
                             </button>
+                            <MoreOptionsModal isOpen={moreOptions}/>
                             <h1 className={`font-semibold hidden ${isOpen && 'lg:block'}`}> {user?.username} </h1>
                         </div>
                         <button 
@@ -38,7 +55,7 @@ function Sidebar() {
                         </button>
                     </div>
                     <div className="flex-1 min-h-0 w-full">
-                        <ActivityPanel/>
+                        <ActivityPanel friends={friends} sidebarMode={isOpen ? "LARGE" : "SMALL"}/>
                     </div>
                 </div>
             </div>

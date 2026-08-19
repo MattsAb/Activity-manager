@@ -1,20 +1,35 @@
 import { Router } from "express";
-import { addFriend, removeFriend, sendRequest } from "../controllers/userController";
+import { addFriend, getFriends, getRequests, getSearch, removeFriend, sendRequest } from "../controllers/userController";
 
 const router = Router()
 
-router.post(
-    '/add',
-    addFriend
+router.get(
+    '/',
+    getFriends
+)
+
+router.get(
+    '/requests',
+    getRequests
+)
+
+router.get(
+    '/search',
+    getSearch
 )
 
 router.post(
-    '/remove',
+    '/add/:userId',
+    addFriend
+)
+
+router.delete(
+    '/remove/:userId',
     removeFriend
 )
 
 router.post(
-    'send',
+    '/send/:userId',
     sendRequest
 )
 
