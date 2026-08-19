@@ -68,7 +68,11 @@ function ActivityPage() {
             <div className="w-full dark:bg-darktheme-3 bg-lighttheme-2 p-5 shrink-0">
                 <div className="font-semibold text-2xl flex gap-3">
                     {activity?.users.map((user) => (
-                        <h1>{user.username}</h1>
+                        <h1 
+                            key={user.id}
+                        >
+                            {user.username}
+                        </h1>
                     )) }
                 </div>
             </div>
@@ -90,6 +94,7 @@ function ActivityPage() {
                 <div className="flex items-center justify-center px-5 py-4 gap-3">
                     <textarea
                         value={input}
+                        maxLength={250}
                         onChange={(e) => setInput(e.target.value)}
                         className="py-3 px-5 w-2/3 dark:bg-darktheme-2 bg-lighttheme-1 border dark:border-none rounded-full resize-none outline-none"
                         rows={2}

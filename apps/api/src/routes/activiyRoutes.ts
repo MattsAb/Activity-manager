@@ -8,3 +8,5 @@ router.get(
     '/:userId',
     getActivity
 )
+
+export default router

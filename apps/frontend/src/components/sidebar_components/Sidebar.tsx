@@ -9,7 +9,6 @@ import type { FrontendUser } from "@activity-manager/types";
 function Sidebar() {
 
     const [friends, setFriends] = useState<FrontendUser[]>([])
-    const [errorMessage, setErrorMessage] = useState('')
 
     const [isOpen, setIsOpen] = useState(true)
     const [moreOptions, setMoreOptions] = useState(false)
@@ -36,10 +35,7 @@ function Sidebar() {
             const result = await getFriends()
             if (result.success && result.data) {
                 setFriends(result.data)
-            } else if(result.error) {
-                setErrorMessage(result.error)
             }
-
         }
         fetchFriends()
     })
@@ -59,8 +55,10 @@ function Sidebar() {
                                 onClick={() => setMoreOptions(!moreOptions)}
                             >
                             </button>
+
                             <MoreOptionsModal isOpen={moreOptions}/>
                             <h1 className={`font-semibold hidden ${isOpen && 'lg:block'}`}> {user?.username} </h1>
+
                         </div>
                         <button 
                             onClick={() => setIsOpen(!isOpen)}

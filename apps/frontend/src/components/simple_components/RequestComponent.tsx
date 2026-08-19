@@ -3,11 +3,9 @@ import { useState } from "react"
 import ErrorMessageComponent from "../simple_components/ErrorMessageComponent"
 import { addFriend, declineRequest } from "../../utils/services/user.api"
 
-
 type UserComponentProps = {
     user: FrontendUser
 }
-
 
 function RequestComponent({user}: UserComponentProps) {
 

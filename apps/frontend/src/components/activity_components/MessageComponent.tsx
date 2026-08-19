@@ -62,10 +62,11 @@ function MessageComponent({type, message}: MessageProps) {
                         { !inEdit ? (
                             <div className="flex gap-3">
                                 {type == "other" && <img src={imgtest} className="w-5 h-5"/>}
-                                <p>{message.body}</p>
+                                <p className="break-all">{message.body}</p>
                             </div>
                         ) : (
                             <textarea
+                                maxLength={250}
                                 className="dark:bg-darktheme-2 bg-lighttheme-1 dark:text-white text-black wrap-break-word min-w-0 w-full rounded-2xl py-1 px-2 outline-none scrollbar-none"
                                 value={editValue}
                                 onChange={(e) => setEditValue(e.target.value)}
