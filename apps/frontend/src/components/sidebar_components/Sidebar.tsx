@@ -3,13 +3,8 @@ import { Bars3Icon } from "@heroicons/react/20/solid";
 import ActivityPanel from "./ActivityPanel";
 import { useAuth } from "../../context/AuthContext";
 import MoreOptionsModal from "./MoreOptionsModal";
-import type { Activity } from "@activity-manager/types";
 
-type SidebarProps = {
-    activities: Activity[]
-}
-
-function Sidebar({activities}: SidebarProps) {
+function Sidebar() {
 
     const [isOpen, setIsOpen] = useState(true)
     const [moreOptions, setMoreOptions] = useState(false)
@@ -47,7 +42,10 @@ function Sidebar({activities}: SidebarProps) {
                                 <img className="rounded-full w-full h-full" src={user?.avatarUrl}/>
                             </button>
 
-                            <MoreOptionsModal isOpen={moreOptions}/>
+                            <MoreOptionsModal 
+                                onClose={() => setMoreOptions(false)}
+                                isOpen={moreOptions}
+                            />
                             <h1 className={`font-semibold hidden ${isOpen && 'lg:block'}`}> {user?.username} </h1>
 
                         </div>
@@ -59,7 +57,7 @@ function Sidebar({activities}: SidebarProps) {
                         </button>
                     </div>
                     <div className="flex-1 min-h-0 w-full">
-                        <ActivityPanel activities={activities} sidebarMode={isOpen ? "LARGE" : "SMALL"}/>
+                        <ActivityPanel sidebarMode={isOpen ? "LARGE" : "SMALL"}/>
                     </div>
                 </div>
             </div>

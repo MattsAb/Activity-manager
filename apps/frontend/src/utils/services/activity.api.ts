@@ -31,3 +31,16 @@ export async function leaveActivity(id: string): Promise<ApiResponse<null>> {
         return handleError(err)
     }
 }
+
+export async function createActivity(users: string[], title: string): Promise<ApiResponse<Activity>> {
+    try{
+        const response = await api.post<ApiResponse<Activity>>(`api/v1/activity`, {
+            title,
+            users
+        })
+        return response.data
+
+    }catch (err) {
+        return handleError(err)
+    }
+}

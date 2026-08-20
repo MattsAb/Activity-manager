@@ -31,11 +31,16 @@ export async function addFriend(req: Request, res: Response) {
                 receiverId: req.userId
             }
         },
-        data: { status: "ACCEPTED" }
+        data: { status: "ACCEPTED" },
+        include: {
+            sender: true,
+            receiver: true,
+        }
     })
 
     await prisma.activity.create({
         data: {
+            title: `${updated_request.sender.username}&${updated_request.receiver.username}`,
             users: {
                 connect: [
                     { id: updated_request.receiverId },

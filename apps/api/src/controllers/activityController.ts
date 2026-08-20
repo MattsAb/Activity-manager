@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../config/prisma';
 import { ServerError } from '../middleware/errorHandler';
+import { FrontendUser } from '@activity-manager/types';
 
 export async function getActivity(req: Request, res: Response) {
     const activityId = req.params.id
@@ -80,4 +81,26 @@ export async function leaveActivity(req: Request, res: Response) {
     }
 
     return res.status(200).json({success: true})
+}
+
+
+export async function createActivity(req: Request, res: Response) {
+    console.log('hey')
+    const title = req.body.title
+    const users: string[] = req.body.users
+
+    const activity = await prisma.activity.create({
+        data: {
+            title,
+            users: {
+                connect: [
+                    { id: req.userId },
+                    ...users.map((id) => ({ id: id }))
+                ]
+            }
+        },
+    })
+
+    return res.status(200).json({success: true, data: activity})
+
 }

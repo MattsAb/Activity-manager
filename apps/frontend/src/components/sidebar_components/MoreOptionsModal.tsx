@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom"
 
 type MoreOptionsProps = {
     isOpen: boolean
+    onClose: () => void
 }
 
-function MoreOptionsModal ({isOpen}: MoreOptionsProps) {
+function MoreOptionsModal ({isOpen,onClose}: MoreOptionsProps) {
 
     const navigate = useNavigate()
 
@@ -12,29 +13,47 @@ function MoreOptionsModal ({isOpen}: MoreOptionsProps) {
 
     const goToSearch = () => navigate('/search')
     const goToFriends = () => navigate('/friends')
+    const goToCreate = () => navigate('/create')
     const goToRequests = () => navigate('/requests')
     const goToSettings = () => navigate('/settings')
 
     return (
-        <div className="flex flex-col dark:bg-darktheme-3 bg-lighttheme-2 absolute top-40 left-10 -translate-y-full  w-30 gap-1 p-3 rounded-xl">
+        <div className="flex flex-col dark:bg-darktheme-3 bg-lighttheme-2 z-20 absolute top-60 left-10 -translate-y-full  w-30 gap-1 p-3 rounded-xl">
             <button className="hover:dark:bg-darkhover-1 rounded-2xl cursor-pointer flex gap-3 p-1"
-                onClick={() => goToSearch()}
+                onClick={() => {
+                    goToSearch()
+                    onClose()
+                }}
             >
                 Search
             </button>
             <button className="hover:dark:bg-darkhover-1 rounded-2xl cursor-pointer flex gap-3 p-1"
-                onClick={() => goToFriends()}
+                onClick={() => {
+                    goToCreate()
+                    onClose()
+                }}
+            >
+               Create
+            </button>
+            <button className="hover:dark:bg-darkhover-1 rounded-2xl cursor-pointer flex gap-3 p-1"
+                onClick={() => {
+                    onClose()
+                    goToFriends()}}
             >
                 Friends
             </button>
             <button className="hover:dark:bg-darkhover-1 rounded-2xl cursor-pointer flex gap-3 p-1"
-                onClick={() => goToRequests()}
+                onClick={() => {
+                    onClose()
+                    goToRequests()}}
             >
                 Requests
             </button>
             <button 
                 className="hover:dark:bg-darkhover-1 rounded-2xl cursor-pointer flex gap-3 p-1"
-                onClick={() => goToSettings()}
+                onClick={() => {
+                    onClose()
+                    goToSettings()}}
             >
                 Settings
             </button>

@@ -49,7 +49,7 @@ function ActivityComponent({activity, sidebarMode}: ActiviyProps) {
                     )
                 })}
             </div>
-            {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">group name</h1> }
+            {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">{activity.title}</h1> }
         </button>
     )
 }

@@ -8,6 +8,7 @@ import AppLayout from "./components/AppLayout"
 import SearchPage from "./pages/SearchPage"
 import RequestPage from "./pages/RequestPage"
 import FriendPage from "./pages/FriendPage"
+import CreateActivityPage from "./pages/CreateActivityPage"
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/search" element={<SearchPage/>}/>
           <Route path="/requests" element={<RequestPage/>}/>
           <Route path="/friends" element={<FriendPage/>}/>
+          <Route path="/create" element={<CreateActivityPage/>}/>
         </Route>
       </Route>
       

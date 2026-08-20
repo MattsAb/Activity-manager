@@ -7,12 +7,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import { getActivity, leaveActivity } from "../utils/services/activity.api"
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent"
 import { useActivity } from "../context/ActivityContext"
+import ConfirmModal from "../components/simple_components/ConfirmModal"
 
 function ActivityPage() {
 
     const [input, setInput] = useState('')
     const [messages, setMessages] = useState<Message[]>([])
     const [activity, setActivity] = useState<Activity>()
+    const [confirmOpen, setConfirmOpen] = useState(false)
 
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -78,20 +80,22 @@ function ActivityPage() {
         <div className="h-screen w-full flex flex-col">
             <div className="w-full flex justify-between dark:bg-darktheme-3 bg-lighttheme-2 p-5 shrink-0">
                 <div className="font-semibold text-2xl flex gap-3">
-                    {activity?.users.map((user) => (
-                        <h1 
-                            key={user.id}
-                        >
-                            {user.username}
+                        <h1 >
+                            {activity?.title}
                         </h1>
-                    )) }
                 </div>
                 <button 
                     className="px-3 py-1 rounded-2xl bg-red-500 cursor-pointer"
-                    onClick={() => handleLeave()}
+                    onClick={() => setConfirmOpen(true)}
                 >
                     Leave
                 </button>
+                <ConfirmModal
+                    header="Are you sure you want to leave this Activity?"
+                    isOpen={confirmOpen}
+                    cancel={() => setConfirmOpen(false)}
+                    confirm={() => handleLeave()}
+                />
             </div>
 
             <div className="flex-1 min-h-0 flex flex-col items-center">

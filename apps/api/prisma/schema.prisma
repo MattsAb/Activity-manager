@@ -36,6 +36,7 @@ model Message {
 
 model Activity {
   id        String  @id @default(uuid()) @db.Uuid
+  title     String?
 
   messages Message[]
   users User[]

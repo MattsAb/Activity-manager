@@ -2,6 +2,7 @@ import type { FrontendUser } from "@activity-manager/types"
 import { useState } from "react"
 import ErrorMessageComponent from "../simple_components/ErrorMessageComponent"
 import { addFriend, declineRequest } from "../../utils/services/user.api"
+import { useActivity } from "../../context/ActivityContext"
 
 type UserComponentProps = {
     user: FrontendUser
@@ -12,6 +13,8 @@ function RequestComponent({user}: UserComponentProps) {
     const [visible, setVisible] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
 
+    const {fetchActivities} = useActivity()
+
     async function handleRequest(answer: "ACCEPTED" | "DECLINED") {
         let result
         if (answer == "ACCEPTED"){
@@ -21,6 +24,7 @@ function RequestComponent({user}: UserComponentProps) {
         }
         if (result.success) {
             setVisible(false)
+            fetchActivities()
         } else if (result.error) {
             setErrorMessage(errorMessage)
         }
