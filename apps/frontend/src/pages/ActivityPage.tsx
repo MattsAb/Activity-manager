@@ -85,7 +85,7 @@ function ActivityPage() {
                         </h1>
                 </div>
                 <button 
-                    className="px-3 py-1 rounded-2xl bg-red-500 cursor-pointer"
+                    className="px-3 py-1 rounded-2xl bg-red-600 text-white cursor-pointer"
                     onClick={() => setConfirmOpen(true)}
                 >
                     Leave

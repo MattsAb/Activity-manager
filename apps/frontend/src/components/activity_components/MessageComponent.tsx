@@ -59,8 +59,13 @@ function MessageComponent({type, message}: MessageProps) {
                     <div className={`${type == "user" ? "dark:bg-app-2 bg-app-1 self-end text-white" : "dark:bg-darktheme-1 bg-lighttheme-2"} rounded-3xl p-3 items-center flex gap-3`}>
 
                         { !inEdit ? (
-                            <div className="flex gap-3">
-                                {type == "other" && <img src={message.user?.avatarUrl} className="w-5 h-5 rounded-full"/>}
+                            <div className="flex flex-col">
+                                {type == "other" && 
+                                <div className="flex gap-2">
+                                    <img src={message.user?.avatarUrl} className="w-5 h-5 rounded-full"/>
+                                    <h1 className="text-sm">{message.user.username}</h1>
+                                </div>
+                                }
                                 <p className="break-all">{message.body}</p>
                             </div>
                         ) : (

@@ -36,10 +36,10 @@ function Sidebar() {
                     <div className={`flex w-full items-center justify-between gap-3`}>
                         <div ref={ref} className="flex gap-3 items-center justify-center">
                             <button
-                                className=" h-8 w-8 rounded-full cursor-pointer"
+                                className="h-9 w-9 border-2 border-mist-600 items-center flex justify-center rounded-full cursor-pointer"
                                 onClick={() => setMoreOptions(!moreOptions)}
                             >
-                                <img className="rounded-full w-full h-full" src={user?.avatarUrl}/>
+                                <img className="rounded-full w-8 h-8" src={user?.avatarUrl}/>
                             </button>
 
                             <MoreOptionsModal 

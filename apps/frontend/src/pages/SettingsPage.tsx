@@ -57,60 +57,61 @@ function SettingsPage() {
         }
     }
     return (
-        <div className="w-full">
-            <div>
-                <img className="w-25 h-25 rounded-full" src={preview ? preview : avatar}/>
-                <input
-                    ref={fileInputRef}
-                    className="hidden"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                />
-                <button
-                    className="dark:bg-darktheme-2 px-3 py-1 rounded-2xl cursor-pointer"
-                    onClick={() => fileInputRef.current?.click()}
-                >Update avatar</button>
+        <div className="w-full h-full p-10 flex flex-col  items-center justifiy-center">
+            <div className="dark:bg-darktheme-3 bg-lighttheme-1 p-5 rounded-xl flex flex-col md:flex-row gap-5 lg:w-2/3 w-full">
+
+            <div className="flex flex-col gap-3">
+                <div className="flex gap-3">
+                    <img className="w-40 h-40 rounded-full" src={preview ? preview : avatar}/>
+                    <input
+                        ref={fileInputRef}
+                        className="hidden"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                    />
+                    <div className="flex items-center">
+                        <button
+                            className="dark:bg-darktheme-2 bg-lighttheme-2 px-3 py-4 rounded-2xl cursor-pointer"
+                            onClick={() => fileInputRef.current?.click()}
+                        >Update avatar</button>
+                    </div>
+                </div>
+                    <div className="flex flex-col gap-2">
+                        <h2 className="font-semibold">Username</h2>
+                        <input 
+                            className="dark:bg-darktheme-2 dark:border-none border p-1 outline-none rounded-xl"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="flex gap-5 flex-1 md:flex-col flex-row items-end justify-between">
+                    <button className="bg-red-600 p-2 text-white rounded-2xl cursor-pointer"
+                         onClick={() => setConfirmOpen(true)}
+                    > Delete Account </button>
+                    <div className="flex gap-4">
+                        <button className="bg-lighttheme-2 hover:bg-lighthover-1 dark:bg-darktheme-2 hover:dark:bg-darkhover-1  px-3 py-2 rounded-xl cursor-pointer"
+                            onClick={() => logout()}
+                        >
+                            Log Out
+                        </button>
+                        <button className="bg-app-2 p-2 text-white rounded-2xl cursor-pointer"
+                            onClick={() => handleEdit()}
+                        > Save </button>
+                    </div>
+                    <ConfirmModal
+                        isOpen={confirmOpen}
+                        cancel={() => setConfirmOpen(false)}
+                        confirm={() => {
+                            setConfirmOpen(false)
+                            handleDelete()
+                        }}
+                        header="Are you sure you want to delete your account?"
+                    />
+                </div>
             </div>
-            <div>
-                <input 
-                    className="dark:bg-darktheme-2 p-1 outline-none rounded-xl"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div className="flex gap-3">
-                <button className="bg-lighttheme-2 hover:bg-lighthover-1 dark:bg-darktheme-3 hover:dark:bg-darkhover-1 rounded-full px-2 py-1 cursor-pointer"
-                >
-                    Dark
-                </button>
-                <button className="bg-lighttheme-2 hover:bg-lighthover-1 dark:bg-darktheme-3 hover:dark:bg-darkhover-1 rounded-full px-2 py-1 cursor-pointer"
-                >
-                    Light
-                </button>
-                
-            </div>
-            <button className="bg-lighttheme-2 hover:bg-lighthover-1 dark:bg-darktheme-3 hover:dark:bg-darkhover-1  px-2 py-1 rounded-xl cursor-pointer"
-                onClick={() => logout()}
-            >
-                Log Out
-            </button>
-            <button className="bg-app-2 p-2 rounded-2xl cursor-pointer"
-                onClick={() => handleEdit()}
-            > Save </button>
-            <button className="bg-red-600 text-white p-2 rounded-2xl cursor-pointer"
-                onClick={() => setConfirmOpen(true)}
-            > Delete Account </button>
-            <ConfirmModal
-                isOpen={confirmOpen}
-                cancel={() => setConfirmOpen(false)}
-                confirm={() => {
-                    setConfirmOpen(false)
-                    handleDelete()
-                }}
-                header="Are you sure you want to delete your account?"
-            />
-            <ErrorMessageComponent errorMessage={errorMessage}/>
+             <ErrorMessageComponent errorMessage={errorMessage}/>
         </div>
     )
 }

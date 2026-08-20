@@ -43,19 +43,19 @@ function CreateActivityPage() {
     })
 
     return (
-        <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
+        <div className="w-full h-full flex flex-col gap-5 items-center justify-center p-5">
             <h1 className="font-semibold text-2xl">Create your Acitivty</h1>
             <div className="flex flex-col items-center gap-3">
                 <h2 className="font-semibold text-xl">Acitivty Name</h2>
                 <input
                     value={titleinput}
                     onChange={(e) => setTitleInput(e.target.value)}
-                    className="p-2 outline-none rounded-2xl bg-darktheme-3"
+                    className="p-2 outline-none rounded-2xl dark:bg-darktheme-3 dark:border-none border"
                     placeholder="activity name..."
                 />
             <ErrorMessageComponent errorMessage={errorMessage}/>
             </div>
-                { friends.length > 0 &&  <div className="dark:bg-darktheme-3 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 w-full md:w-2/3 lg:w-1/2 h-1/2 rounded-2xl">
+                { friends.length > 0 &&  <div className="dark:bg-darktheme-3 bg-lighttheme-2 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 w-full md:w-2/3 lg:w-1/2 h-1/2 rounded-2xl">
 
                 {friends.map((user) => (
                     <AddFriendComponent
@@ -74,7 +74,7 @@ function CreateActivityPage() {
 
             </div>}
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 text-white">
                 <button className="rounded-2xl bg-app-2 px-3 py-1 text-xl font-semibold cursor-pointer"
                     onClick={() => goToHome()}
                 >
