@@ -194,3 +194,32 @@ export async function getProfile(req: Request, res: Response) {
 
     return res.status(201).json({success: true, data: user})
 }
+
+export async function getFriends(req: Request, res: Response) {
+    const userId = req.userId
+
+    const requests = await prisma.request.findMany({
+        where: {
+            status: "ACCEPTED",
+            OR: [
+                { senderId: userId },
+                { receiverId: userId }
+            ]
+        },
+        include: {
+            sender: true,
+            receiver: true
+        }
+    })
+
+    const friends = requests.map((request) => {
+            const friend = request.senderId === userId ? request.receiver : request.sender
+            return {
+                id: friend.id,
+                username: friend.username,
+                avatarUrl: friend.avatarUrl
+            }
+        })
+
+    return res.status(200).json({success: true, data: friends})
+}

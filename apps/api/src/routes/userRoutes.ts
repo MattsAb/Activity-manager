@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addFriend, getProfile, getRequests, getSearch, removeFriend, sendRequest, updateProfile } from "../controllers/userController";
+import { addFriend, getFriends, getProfile, getRequests, getSearch, removeFriend, sendRequest, updateProfile } from "../controllers/userController";
 import { createUpload } from "../utils/s3";
 
 const router = Router()
@@ -17,6 +17,11 @@ router.get(
 router.get(
     '/search',
     getSearch
+)
+
+router.get(
+    '/friends',
+    getFriends
 )
 
 router.post(

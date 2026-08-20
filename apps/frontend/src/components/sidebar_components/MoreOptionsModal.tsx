@@ -11,6 +11,7 @@ function MoreOptionsModal ({isOpen}: MoreOptionsProps) {
     if (!isOpen) { return (<></>)}
 
     const goToSearch = () => navigate('/search')
+    const goToFriends = () => navigate('/friends')
     const goToRequests = () => navigate('/requests')
     const goToSettings = () => navigate('/settings')
 
@@ -20,6 +21,11 @@ function MoreOptionsModal ({isOpen}: MoreOptionsProps) {
                 onClick={() => goToSearch()}
             >
                 Search
+            </button>
+            <button className="hover:dark:bg-darkhover-1 rounded-2xl cursor-pointer flex gap-3 p-1"
+                onClick={() => goToFriends()}
+            >
+                Friends
             </button>
             <button className="hover:dark:bg-darkhover-1 rounded-2xl cursor-pointer flex gap-3 p-1"
                 onClick={() => goToRequests()}

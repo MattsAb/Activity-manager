@@ -56,7 +56,7 @@ export async function declineRequest(id: string): Promise<ApiResponse<null>> {
 
 export async function getFriends(): Promise<ApiResponse<FrontendUser[]>> {
     try{
-        const response = await api.get<ApiResponse<FrontendUser[]>>(`api/v1/user`)
+        const response = await api.get<ApiResponse<FrontendUser[]>>(`api/v1/user/friends`)
         return response.data
 
     }catch (err) {
@@ -86,6 +86,15 @@ export async function editUserProfile(imageFile?: File, username?: string): Prom
 export async function getProfile(): Promise<ApiResponse<FrontendUser>> {
     try {
         const response = await api.get<ApiResponse<FrontendUser>>(`/api/v1/user/`)
+        return response.data
+    } catch (err) {
+        return handleError(err)
+    }
+}
+
+export async function removeFriend(id: string): Promise<ApiResponse<null>> {
+    try {
+        const response = await api.delete<ApiResponse<null>>(`/api/v1/user/remove/${id}`)
         return response.data
     } catch (err) {
         return handleError(err)

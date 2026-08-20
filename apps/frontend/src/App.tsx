@@ -7,6 +7,7 @@ import ProtectedRoutes from "./components/protectedRoutes"
 import AppLayout from "./components/AppLayout"
 import SearchPage from "./pages/SearchPage"
 import RequestPage from "./pages/RequestPage"
+import FriendPage from "./pages/FriendPage"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/settings" element={<SettingsPage/>}/>
           <Route path="/search" element={<SearchPage/>}/>
           <Route path="/requests" element={<RequestPage/>}/>
+          <Route path="/friends" element={<FriendPage/>}/>
         </Route>
       </Route>
       
