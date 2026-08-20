@@ -1,11 +1,16 @@
 import { Router } from "express";
-import { getActivity} from "../controllers/activityController";
+import { getActivities, getActivity} from "../controllers/activityController";
 
 
 const router = Router()
 
 router.get(
-    '/:userId',
+    '/',
+    getActivities
+)
+
+router.get(
+    '/:id',
     getActivity
 )
 

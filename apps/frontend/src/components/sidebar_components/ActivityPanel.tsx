@@ -1,22 +1,26 @@
-import type { FrontendUser } from "@activity-manager/types"
+import type { Activity} from "@activity-manager/types"
 import ActivityComponent from "./ActivityComponent"
+import { useAuth } from "../../context/AuthContext"
 
 
 type ActivityPanelProps = {
-    friends: FrontendUser[]
+    activities: Activity[]
     sidebarMode: "SMALL" | "LARGE"
 }
 
-function ActivityPanel({friends, sidebarMode}: ActivityPanelProps) {
+function ActivityPanel({activities, sidebarMode}: ActivityPanelProps) {
+
+    const {user} = useAuth()
 
     return (
         <div className="flex flex-col h-full w-full">
             <div className="flex-1 min-h-0 overscroll-contain overflow-y-auto scrollbar-none">
                 <div className="space-y-3">
-                    {friends && friends.map((friend) => (
+                    {activities && activities.map((activity) => (
                         <ActivityComponent
-                            key={friend.id}
-                            user={friend}
+                            key={activity.id}
+                            activity={activity}
+                            user={user}
                             sidebarMode={sidebarMode}
                         />
                     ))}

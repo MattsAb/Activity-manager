@@ -3,12 +3,12 @@ import { Bars3Icon } from "@heroicons/react/20/solid";
 import ActivityPanel from "./ActivityPanel";
 import { useAuth } from "../../context/AuthContext";
 import MoreOptionsModal from "./MoreOptionsModal";
-import { getFriends } from "../../utils/services/user.api";
-import type { FrontendUser } from "@activity-manager/types";
+import type { Activity} from "@activity-manager/types";
+import { getActivities } from "../../utils/services/activity.api";
 
 function Sidebar() {
 
-    const [friends, setFriends] = useState<FrontendUser[]>([])
+    const [activites, setActivites] = useState<Activity[]>([])
 
     const [isOpen, setIsOpen] = useState(true)
     const [moreOptions, setMoreOptions] = useState(false)
@@ -31,13 +31,13 @@ function Sidebar() {
     }, [moreOptions]);
 
     useEffect(() => {
-        async function fetchFriends() {
-            const result = await getFriends()
+        async function fetchActivities() {
+            const result = await getActivities()
             if (result.success && result.data) {
-                setFriends(result.data)
+                setActivites(result.data)
             }
         }
-        fetchFriends()
+        fetchActivities()
     })
 
 
@@ -68,7 +68,7 @@ function Sidebar() {
                         </button>
                     </div>
                     <div className="flex-1 min-h-0 w-full">
-                        <ActivityPanel friends={friends} sidebarMode={isOpen ? "LARGE" : "SMALL"}/>
+                        <ActivityPanel activities={activites} sidebarMode={isOpen ? "LARGE" : "SMALL"}/>
                     </div>
                 </div>
             </div>

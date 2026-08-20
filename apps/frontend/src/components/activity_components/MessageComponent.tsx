@@ -26,7 +26,7 @@ function MessageComponent({type, message}: MessageProps) {
         if (time > 60 * 60 * 60 * 1000) {
             return`${message_date.toLocaleDateString()}`
         } else {
-            return message_date.toLocaleTimeString("it-IT")
+            return message_date.toLocaleTimeString("it-IT",{ hour: "2-digit", minute: "2-digit" })
         }
     }
      

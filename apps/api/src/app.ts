@@ -48,22 +48,26 @@ io.on('connection', (socket) => {
         socket.join(channelId)
     })
 
-  socket.on('send_message', async (data) => {
-      if (!data.activityId || !data.body) return
+    socket.on('leave_channel', (channelId: string) => {
+        socket.leave(channelId)
+    })
 
-      const message = await prisma.message.create({
-          data: {
-              body: data.body,
-              userId: socket.data.userId,
-              activityId: data.activityId
-          },
-          include: {
-              user: { select: { id: true, username: true, avatarUrl: true } }
-          }
-      })
+    socket.on('send_message', async (data) => {
+        if (!data.activityId || !data.body) return
 
-      io.to(data.activityId).emit('new_message', message)
-  })
+        const message = await prisma.message.create({
+            data: {
+                body: data.body,
+                userId: socket.data.userId,
+                activityId: data.activityId
+            },
+            include: {
+                user: { select: { id: true, username: true, avatarUrl: true } }
+            }
+        })
+
+        io.to(data.activityId).emit('new_message', message)
+    })
 
     socket.on('edit_message', async (data) => {
       if (!data.activityId || !data.body) return

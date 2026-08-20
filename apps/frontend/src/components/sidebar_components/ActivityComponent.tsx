@@ -1,16 +1,29 @@
-import type { FrontendUser } from "@activity-manager/types"
+import type { Activity, FrontendUser } from "@activity-manager/types"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 type ActiviyProps = {
-    user: FrontendUser
+    activity: Activity
     sidebarMode: "SMALL" | "LARGE"
+    user?: FrontendUser
 }
 
-function ActivityComponent({user, sidebarMode}: ActiviyProps) {
-
+function ActivityComponent({activity, sidebarMode, user}: ActiviyProps) {
+    const [showUser, setShowUser] = useState<FrontendUser>()
     const navigate = useNavigate()
 
-    const goToActivity = () => navigate(`/activity/${user.id}`)
+    const goToActivity = () => navigate(`/activity/${activity.id}`)
+
+    const getShowUser = (): FrontendUser => {
+        if (!showUser) {
+            activity.users.forEach((u) => {
+                if (u.id !== user?.id) {setShowUser(u)}
+            })
+            return showUser
+        }
+        else return showUser
+    }
+    getShowUser()
 
     return (
         <button 
@@ -18,7 +31,7 @@ function ActivityComponent({user, sidebarMode}: ActiviyProps) {
             onClick={() => goToActivity()}
             >
             <div className="w-20 h-20 dark:bg-mist-700 rounded-full"/>
-            {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">{user.username}</h1> }
+            {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">{showUser?.username}</h1> }
         </button>
     )
 }
