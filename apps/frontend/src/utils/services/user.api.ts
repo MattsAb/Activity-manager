@@ -63,3 +63,31 @@ export async function getFriends(): Promise<ApiResponse<FrontendUser[]>> {
         return handleError(err)
     }
 }
+
+export async function editUserProfile(imageFile?: File, username?: string): Promise<ApiResponse<null>> {
+    try {
+        const formData = new FormData()
+        if (username) {
+            formData.append('username', username)
+        }
+        if (imageFile) {
+            formData.append('avatar', imageFile)
+        }
+
+        const response = await api.put<ApiResponse<null>>(`/api/v1/user/profile`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+        return response.data
+    } catch (err) {
+        return handleError(err)
+    }
+}
+
+export async function getProfile(): Promise<ApiResponse<FrontendUser>> {
+    try {
+        const response = await api.get<ApiResponse<FrontendUser>>(`/api/v1/user/`)
+        return response.data
+    } catch (err) {
+        return handleError(err)
+    }
+}

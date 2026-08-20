@@ -41,7 +41,6 @@ function ActivityPage() {
     })
 
     socket.on('edited_message', (message) => {
-        console.log(message)
         setMessages(prev => prev.map(m => m.id === message.id ? message : m))
     })
 

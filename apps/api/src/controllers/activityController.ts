@@ -15,7 +15,15 @@ export async function getActivity(req: Request, res: Response) {
             },
             messages: { orderBy: {
                 createdAt: 'asc'
-            }}
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true, username: true, avatarUrl: true
+                    }
+                }
+            }
+        }
         }
     })
 

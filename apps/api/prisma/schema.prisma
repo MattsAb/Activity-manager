@@ -12,7 +12,7 @@ model User {
   email      String   @unique
   username   String   @unique
   password   String
-  avatarUrl  String?
+  avatarUrl  String   @default("https://activitymanager-s3-bucket.s3.eu-north-1.amazonaws.com/avatars/Default-user.svg")
   createdAt  DateTime @default(now())
 
   messages Message[]

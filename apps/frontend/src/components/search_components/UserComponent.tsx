@@ -1,5 +1,5 @@
 import type { FrontendUser } from "@activity-manager/types"
-import { useState } from "react"
+import { use, useState } from "react"
 import ErrorMessageComponent from "../simple_components/ErrorMessageComponent"
 import { sendRequest } from "../../utils/services/user.api"
 
@@ -27,7 +27,7 @@ function UserComponent({user}: UserComponentProps) {
     return (
         <div className="w-full rounded-xl dark:bg-darktheme-2 bg-lighttheme-2 p-3 justify-between flex items-center">
             <div className="flex items-center gap-3">
-                <div className="w-15 h-15 rounded-full bg-amber-900"/>
+                <img src={user?.avatarUrl} className="w-15 h-15 rounded-full"/>
                 <h1 className="font-semibold text-2xl">{user.username}</h1>
             </div>
             <ErrorMessageComponent errorMessage={errorMessage}/>

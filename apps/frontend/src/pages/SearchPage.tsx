@@ -23,7 +23,7 @@ function SearchPage() {
     }
 
     return (
-        <div className="flex flex-col min-h-0 w-full h-full items-center justify-center">
+        <div className="flex flex-col p-5 min-h-0 w-full h-full items-center justify-center">
             <div className="flex flex-col items-center p-4 rounded-xl gap-4 shrink-0">
                 <h1 className="text-2xl font-semibold"> Find Friends </h1>
                 <div className="flex gap-3">
@@ -39,7 +39,7 @@ function SearchPage() {
                     </button>
                 </div>
             </div>
-            { users.length > 0 &&  <div className="dark:bg-darktheme-3 bg-lighttheme-2 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 w-1/2 h-1/2 rounded-2xl">
+            { users.length > 0 &&  <div className="dark:bg-darktheme-3 bg-lighttheme-2 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 lg:w-1/2 w-full h-1/2 rounded-2xl">
 
                 {users.map((user) => (
                     <UserComponent

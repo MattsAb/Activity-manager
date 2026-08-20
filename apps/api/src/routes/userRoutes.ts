@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { addFriend, getFriends, getRequests, getSearch, removeFriend, sendRequest } from "../controllers/userController";
+import { addFriend, getProfile, getRequests, getSearch, removeFriend, sendRequest, updateProfile } from "../controllers/userController";
+import { createUpload } from "../utils/s3";
 
 const router = Router()
 
 router.get(
     '/',
-    getFriends
+    getProfile
 )
 
 router.get(
@@ -31,6 +32,12 @@ router.delete(
 router.post(
     '/send/:userId',
     sendRequest
+)
+
+router.put(
+    '/profile',
+    createUpload().single('avatar'),
+    updateProfile
 )
 
 export default router

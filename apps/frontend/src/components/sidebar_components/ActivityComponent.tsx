@@ -30,7 +30,7 @@ function ActivityComponent({activity, sidebarMode, user}: ActiviyProps) {
             className="rounded-full h-22 w-full p-2 hover:dark:bg-darkhover-1 hover:bg-lighthover-1 cursor-pointer flex gap-3 items-center"
             onClick={() => goToActivity()}
             >
-            <div className="w-20 h-20 dark:bg-mist-700 rounded-full"/>
+            <img src={showUser?.avatarUrl} className="w-20 h-20 rounded-full"/>
             {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">{showUser?.username}</h1> }
         </button>
     )

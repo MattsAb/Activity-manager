@@ -1,7 +1,6 @@
 import { EllipsisHorizontalIcon, CheckIcon, XMarkIcon } from "@heroicons/react/20/solid"
 import MessageModal from "./MessageModal"
 import { useEffect, useRef, useState } from "react"
-import imgtest from "../../../public/favicon.svg"
 import type { Message } from "@activity-manager/types"
 import { socket } from "../../utils/socket"
 
@@ -61,7 +60,7 @@ function MessageComponent({type, message}: MessageProps) {
 
                         { !inEdit ? (
                             <div className="flex gap-3">
-                                {type == "other" && <img src={imgtest} className="w-5 h-5"/>}
+                                {type == "other" && <img src={message.user?.avatarUrl} className="w-5 h-5 rounded-full"/>}
                                 <p className="break-all">{message.body}</p>
                             </div>
                         ) : (

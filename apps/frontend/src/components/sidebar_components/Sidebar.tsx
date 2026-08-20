@@ -26,7 +26,7 @@ function Sidebar() {
                 setMoreOptions(false);
             }
         }
-        if (isOpen) document.addEventListener('mousedown', handleClickOutside);
+        if (moreOptions) document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [moreOptions]);
 
@@ -51,9 +51,10 @@ function Sidebar() {
                     <div className={`flex w-full items-center justify-between gap-3`}>
                         <div ref={ref} className="flex gap-3 items-center justify-center">
                             <button
-                                className="bg-slate-600 h-8 w-8 rounded-full cursor-pointer"
+                                className=" h-8 w-8 rounded-full cursor-pointer"
                                 onClick={() => setMoreOptions(!moreOptions)}
                             >
+                                <img className="rounded-full w-full h-full" src={user?.avatarUrl}/>
                             </button>
 
                             <MoreOptionsModal isOpen={moreOptions}/>

@@ -25,11 +25,11 @@ function RequestPage() {
     })
 
     return (
-        <div className="flex flex-col min-h-0 w-full h-full items-center justify-center">
+        <div className="flex flex-col min-h-0 w-full h-full items-center p-5 justify-center">
             <div className="flex flex-col items-center p-4 rounded-xl gap-4 shrink-0">
                 <h1 className="text-2xl font-semibold"> {requests.length > 0 ? 'Pending Requests' : "You don't have any friend requests"} </h1>
             </div>
-            { requests.length > 0 &&  <div className="dark:bg-darktheme-3 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 w-1/2 h-1/2 rounded-2xl">
+            { requests.length > 0 &&  <div className="dark:bg-darktheme-3 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 w-full md:w-2/3 lg:w-1/2 h-1/2 rounded-2xl">
 
                 {requests.map((user) => (
                     <RequestComponent
