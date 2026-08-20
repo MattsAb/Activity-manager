@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { editUserProfile, getProfile } from "../utils/services/user.api";
+import { deleteUser, editUserProfile, getProfile } from "../utils/services/user.api";
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent";
+import ConfirmModal from "../components/simple_components/ConfirmModal";
 
 function SettingsPage() {
 
@@ -10,10 +10,11 @@ function SettingsPage() {
     const [preview, setPreview] = useState('');
     const [avatar, setAvatar] = useState('');
     const [username, setUsername] = useState('');
+
+    const [confirmOpen, setConfirmOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('')
 
     const {logout} = useAuth()
-    const navigate = useNavigate()
     const fileInputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
@@ -34,6 +35,15 @@ function SettingsPage() {
 
         if (result.success) {
             window.location.reload()
+        } else if (result.error) {
+            setErrorMessage(result.error)
+        }
+    }
+
+    async function handleDelete() {
+        const result = await deleteUser()
+        if (result.success) {
+            logout()
         } else if (result.error) {
             setErrorMessage(result.error)
         }
@@ -88,6 +98,18 @@ function SettingsPage() {
             <button className="bg-app-2 p-2 rounded-2xl cursor-pointer"
                 onClick={() => handleEdit()}
             > Save </button>
+            <button className="bg-red-600 text-white p-2 rounded-2xl cursor-pointer"
+                onClick={() => setConfirmOpen(true)}
+            > Delete Account </button>
+            <ConfirmModal
+                isOpen={confirmOpen}
+                cancel={() => setConfirmOpen(false)}
+                confirm={() => {
+                    setConfirmOpen(false)
+                    handleDelete()
+                }}
+                header="Are you sure you want to delete your account?"
+            />
             <ErrorMessageComponent errorMessage={errorMessage}/>
         </div>
     )
