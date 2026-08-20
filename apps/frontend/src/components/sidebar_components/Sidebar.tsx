@@ -3,12 +3,13 @@ import { Bars3Icon } from "@heroicons/react/20/solid";
 import ActivityPanel from "./ActivityPanel";
 import { useAuth } from "../../context/AuthContext";
 import MoreOptionsModal from "./MoreOptionsModal";
-import type { Activity} from "@activity-manager/types";
-import { getActivities } from "../../utils/services/activity.api";
+import type { Activity } from "@activity-manager/types";
 
-function Sidebar() {
+type SidebarProps = {
+    activities: Activity[]
+}
 
-    const [activites, setActivites] = useState<Activity[]>([])
+function Sidebar({activities}: SidebarProps) {
 
     const [isOpen, setIsOpen] = useState(true)
     const [moreOptions, setMoreOptions] = useState(false)
@@ -29,17 +30,6 @@ function Sidebar() {
         if (moreOptions) document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [moreOptions]);
-
-    useEffect(() => {
-        async function fetchActivities() {
-            const result = await getActivities()
-            if (result.success && result.data) {
-                setActivites(result.data)
-            }
-        }
-        fetchActivities()
-    })
-
 
     return (
         <>
@@ -69,7 +59,7 @@ function Sidebar() {
                         </button>
                     </div>
                     <div className="flex-1 min-h-0 w-full">
-                        <ActivityPanel activities={activites} sidebarMode={isOpen ? "LARGE" : "SMALL"}/>
+                        <ActivityPanel activities={activities} sidebarMode={isOpen ? "LARGE" : "SMALL"}/>
                     </div>
                 </div>
             </div>

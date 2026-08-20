@@ -21,3 +21,13 @@ export async function getActivities(): Promise<ApiResponse<Activity[]>> {
         return handleError(err)
     }
 }
+
+export async function leaveActivity(id: string): Promise<ApiResponse<null>> {
+    try{
+        const response = await api.put<ApiResponse<null>>(`api/v1/activity/${id}`)
+        return response.data
+
+    }catch (err) {
+        return handleError(err)
+    }
+}

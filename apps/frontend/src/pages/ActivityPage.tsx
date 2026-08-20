@@ -3,9 +3,10 @@ import MessageComponent from "../components/activity_components/MessageComponent
 import type { Activity, Message } from "@activity-manager/types"
 import { useAuth } from "../context/AuthContext"
 import { socket } from "../utils/socket"
-import { useParams } from "react-router-dom"
-import { getActivity } from "../utils/services/activity.api"
+import { useNavigate, useParams } from "react-router-dom"
+import { getActivity, leaveActivity } from "../utils/services/activity.api"
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent"
+import { useActivity } from "../context/ActivityContext"
 
 function ActivityPage() {
 
@@ -16,6 +17,8 @@ function ActivityPage() {
     const [errorMessage, setErrorMessage] = useState('')
 
     const {user} = useAuth()
+    const {fetchActivities} = useActivity()
+    const navigate = useNavigate()
 
     const { id } = useParams();
 
@@ -62,9 +65,18 @@ function ActivityPage() {
         setInput('')
     }
 
+    async function handleLeave() {
+        if (!id) return
+        const result = await leaveActivity(id)
+        if (result.success) {
+            fetchActivities()
+            navigate('/')
+        }
+    }
+
     return (
         <div className="h-screen w-full flex flex-col">
-            <div className="w-full dark:bg-darktheme-3 bg-lighttheme-2 p-5 shrink-0">
+            <div className="w-full flex justify-between dark:bg-darktheme-3 bg-lighttheme-2 p-5 shrink-0">
                 <div className="font-semibold text-2xl flex gap-3">
                     {activity?.users.map((user) => (
                         <h1 
@@ -74,6 +86,12 @@ function ActivityPage() {
                         </h1>
                     )) }
                 </div>
+                <button 
+                    className="px-3 py-1 rounded-2xl bg-red-500 cursor-pointer"
+                    onClick={() => handleLeave()}
+                >
+                    Leave
+                </button>
             </div>
 
             <div className="flex-1 min-h-0 flex flex-col items-center">

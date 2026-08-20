@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getActivities, getActivity} from "../controllers/activityController";
+import { getActivities, getActivity, leaveActivity} from "../controllers/activityController";
 
 
 const router = Router()
@@ -12,6 +12,11 @@ router.get(
 router.get(
     '/:id',
     getActivity
+)
+
+router.put(
+    '/:id',
+    leaveActivity
 )
 
 export default router

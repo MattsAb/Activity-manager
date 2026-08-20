@@ -1,16 +1,19 @@
-import type { Activity} from "@activity-manager/types"
 import ActivityComponent from "./ActivityComponent"
-import { useAuth } from "../../context/AuthContext"
+import { useActivity } from "../../context/ActivityContext"
+import { useEffect } from "react"
 
 
 type ActivityPanelProps = {
-    activities: Activity[]
     sidebarMode: "SMALL" | "LARGE"
 }
 
-function ActivityPanel({activities, sidebarMode}: ActivityPanelProps) {
+function ActivityPanel({sidebarMode}: ActivityPanelProps) {
 
-    const {user} = useAuth()
+    const {activities, fetchActivities} = useActivity()
+
+    useEffect(() => {
+        fetchActivities()
+    },[])
 
     return (
         <div className="flex flex-col h-full w-full">
@@ -20,7 +23,6 @@ function ActivityPanel({activities, sidebarMode}: ActivityPanelProps) {
                         <ActivityComponent
                             key={activity.id}
                             activity={activity}
-                            user={user}
                             sidebarMode={sidebarMode}
                         />
                     ))}

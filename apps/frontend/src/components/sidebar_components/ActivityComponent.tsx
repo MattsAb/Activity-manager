@@ -1,37 +1,55 @@
-import type { Activity, FrontendUser } from "@activity-manager/types"
-import { useState } from "react"
+import type { Activity } from "@activity-manager/types"
 import { useNavigate } from "react-router-dom"
 
 type ActiviyProps = {
     activity: Activity
     sidebarMode: "SMALL" | "LARGE"
-    user?: FrontendUser
 }
 
-function ActivityComponent({activity, sidebarMode, user}: ActiviyProps) {
-    const [showUser, setShowUser] = useState<FrontendUser>()
+function ActivityComponent({activity, sidebarMode}: ActiviyProps) {
     const navigate = useNavigate()
 
     const goToActivity = () => navigate(`/activity/${activity.id}`)
 
-    const getShowUser = (): FrontendUser => {
-        if (!showUser) {
-            activity.users.forEach((u) => {
-                if (u.id !== user?.id) {setShowUser(u)}
-            })
-            return showUser
-        }
-        else return showUser
+    function getAvatarSize(count: number): number {
+        if (count <= 2) return 40
+        if (count <= 4) return 32
+        if (count <= 8) return 24
+        return 18
     }
-    getShowUser()
+
+    function getOffset(count: number): number {
+        if (count <= 2) return 20
+        if (count <= 4) return 14
+        if (count <= 8) return 10
+        return 8
+    }
 
     return (
         <button 
             className="rounded-full h-22 w-full p-2 hover:dark:bg-darkhover-1 hover:bg-lighthover-1 cursor-pointer flex gap-3 items-center"
             onClick={() => goToActivity()}
             >
-            <img src={showUser?.avatarUrl} className="w-20 h-20 rounded-full"/>
-            {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">{showUser?.username}</h1> }
+            <div className="flex w-20 h-20 relative">
+                {activity.users.map((user, i) => {
+                    const size = getAvatarSize(activity.users.length)
+                    const offset = getOffset(activity.users.length)
+                    return (
+                        <img 
+                            key={user.id}
+                            src={user.avatarUrl} 
+                            className="rounded-full absolute top-5 border-2 dark:border-darktheme-4"
+                            style={{ 
+                                width: `${size}px`, 
+                                height: `${size}px`, 
+                                left: `${i * offset}px`, 
+                                zIndex: i 
+                            }}
+                        />
+                    )
+                })}
+            </div>
+            {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">group name</h1> }
         </button>
     )
 }

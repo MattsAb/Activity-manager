@@ -46,3 +46,38 @@ export async function getActivities(req: Request, res: Response) {
     return res.status(200).json({success: true, data: activity})
 
 }
+
+export async function leaveActivity(req: Request, res: Response) {
+    const activityId = req.params.id
+
+    if (!activityId  || typeof activityId  !== "string") throw new ServerError(404, "Not found")
+
+    const activity = await prisma.activity.findFirst({
+        where: {
+            id: activityId,
+            users: { some: { id: req.userId } }
+        },
+        include: {
+            users: true
+        }
+    })
+
+    if (!activity) throw new ServerError(404, "Activity not found or you're not a member")
+
+    await prisma.activity.update({
+        where: { id: activityId },
+        data: {
+            users: {
+                disconnect: { id: req.userId }
+            }
+        }
+    })
+
+    if (activity.users.length < 2) {
+        await prisma.activity.delete({
+            where: { id: activityId },
+        })
+    }
+
+    return res.status(200).json({success: true})
+}
