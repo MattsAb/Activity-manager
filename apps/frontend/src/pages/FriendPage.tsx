@@ -1,6 +1,5 @@
 import type { FrontendUser } from "@activity-manager/types"
 import { useEffect, useState } from "react"
-import RequestComponent from "../components/simple_components/RequestComponent"
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent"
 import { getFriends } from "../utils/services/user.api"
 import FriendComponent from "../components/simple_components/FriendComponent"

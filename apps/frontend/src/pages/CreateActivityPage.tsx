@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react"
 import { getFriends } from "../utils/services/user.api"
 import type { FrontendUser } from "@activity-manager/types"
-import FriendComponent from "../components/simple_components/FriendComponent"
 import { useNavigate } from "react-router-dom"
 import { createActivity } from "../utils/services/activity.api"
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent"
 import AddFriendComponent from "../components/simple_components/AddFriendComponent"
 import { useActivity } from "../context/ActivityContext"
+import { ClipLoader } from "react-spinners"
 
 function CreateActivityPage() {
 
     const [friends, setFriends] = useState<FrontendUser[]>([])
     const [titleinput, setTitleInput] = useState('')
     const [selected, setSelected] = useState<string[]>([])
+    const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
     const {fetchActivities} = useActivity()
     const navigate = useNavigate()
 
     async function handleCreate() {
+        setLoading(true)
         const result = await createActivity(selected, titleinput)
         if (result.success && result.data) {
             fetchActivities()
@@ -26,6 +28,7 @@ function CreateActivityPage() {
         } else if (result.error) {
             setErrorMessage(result.error)
         }
+        setLoading(false)
     }
 
     const goToHome = () => navigate('/')
@@ -73,7 +76,13 @@ function CreateActivityPage() {
                 ))}
 
             </div>}
-
+            <ClipLoader
+                loading={loading}
+                color="#009689"
+                size={25}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+            />
             <div className="flex gap-4 text-white">
                 <button className="rounded-2xl bg-app-2 px-3 py-1 text-xl font-semibold cursor-pointer"
                     onClick={() => goToHome()}

@@ -30,11 +30,16 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
+interface TokenPayload {
+    id: string
+}
+
+
 io.use((socket, next) => {
     const token = socket.handshake.auth.token
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as TokenPayload
-        socket.data.userId = decoded.id
+        socket.data.userId = decoded.id 
         next()
     } catch {
         next(new Error('Unauthorized'))

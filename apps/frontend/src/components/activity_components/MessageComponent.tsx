@@ -22,7 +22,7 @@ function MessageComponent({type, message}: MessageProps) {
     
     function getTime(): string {
         const time = today_date.getTime()- message_date.getTime()
-        if (time > 60 * 60 * 60 * 1000) {
+        if (time > 24 * 60 * 60 * 1000) {
             return`${message_date.toLocaleDateString()}`
         } else {
             return message_date.toLocaleTimeString("it-IT",{ hour: "2-digit", minute: "2-digit" })
@@ -71,6 +71,7 @@ function MessageComponent({type, message}: MessageProps) {
                         ) : (
                             <textarea
                                 maxLength={250}
+                                rows={3}
                                 className="dark:bg-darktheme-2 bg-lighttheme-1 dark:text-white text-black wrap-break-word min-w-0 w-full rounded-2xl py-1 px-2 outline-none scrollbar-none"
                                 value={editValue}
                                 onChange={(e) => setEditValue(e.target.value)}

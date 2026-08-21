@@ -31,6 +31,7 @@ function SettingsPage() {
     },[])
 
     async function handleEdit() {
+        setErrorMessage("")
         const result = await editUserProfile(imageFile ?? undefined, username)
 
         if (result.success) {
@@ -41,6 +42,7 @@ function SettingsPage() {
     }
 
     async function handleDelete() {
+        setErrorMessage("")
         const result = await deleteUser()
         if (result.success) {
             logout()

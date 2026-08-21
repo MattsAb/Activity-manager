@@ -1,10 +1,9 @@
 import { useState } from "react"
-import { getMe, login, register } from "../utils/services/auth.api"
+import { login, register } from "../utils/services/auth.api"
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
-
-
+import { ClipLoader } from "react-spinners"
 
 function AuthPage() {
 
@@ -16,11 +15,13 @@ function AuthPage() {
 
     const [mode, setMode] = useState<'login' | 'register'>('login')
     const [showPassword, setShowPassword] = useState(false)
+    let [loading, setLoading] = useState(false);
 
     const navigate = useNavigate()
     const {saveUser} = useAuth()
 
 async function handleAuth() {
+    setErrorMessage("")
     let result
     if (mode == 'register') {
         result = await register(email, username, password)
@@ -29,6 +30,8 @@ async function handleAuth() {
     }
 
     if (result.success && result.data) {
+        setLoading(true)
+        setErrorMessage('')
         const res = await saveUser(result.data)
         if (res.success) {
             navigate('/')
@@ -38,6 +41,7 @@ async function handleAuth() {
     } else if (result.error) {
         setErrorMessage(result.error)
     }
+    setLoading(false)
 }
     return(
         <div className="w-screen h-screen flex flex-col dark:text-white  items-center justify-center bg-lighthover-1 dark:bg-darktheme-4">
@@ -82,6 +86,13 @@ async function handleAuth() {
                     </div>
                 </div>
                 <ErrorMessageComponent errorMessage={errorMessage}/>
+                <ClipLoader
+                    loading={loading}
+                    color="#009689"
+                    size={25}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
                 <button 
                     className="text-blue-400 hover:text-blue-300 cursor-pointer text-base self-start"
                     onClick={() => setMode(mode == 'login' ? 'register' : 'login')}

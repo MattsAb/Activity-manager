@@ -25,10 +25,9 @@ function ActivityPage() {
     const { id } = useParams();
 
   useEffect(() => {
-    setErrorMessage('')
-    if (!id) return
-
     async function connectToActivity() {
+        if (!id) return
+        setErrorMessage('')
         const result = await getActivity(id)
         if (result.success && result.data) {
             setActivity(result.data)
@@ -69,6 +68,7 @@ function ActivityPage() {
 
     async function handleLeave() {
         if (!id) return
+        setErrorMessage("")
         const result = await leaveActivity(id)
         if (result.success) {
             fetchActivities()

@@ -5,7 +5,7 @@ import { socket } from '../utils/socket';
 
 type AuthContextType = {
     user: FrontendUser |  null
-    saveUser: (token: string) => void
+    saveUser: (token: string) => Promise<ApiResponse<null>>
     isLoading: boolean
     logout: () => void
 

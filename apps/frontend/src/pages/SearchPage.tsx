@@ -3,16 +3,20 @@ import UserComponent from "../components/search_components/UserComponent"
 import type { FrontendUser } from "@activity-manager/types"
 import { getSearch } from "../utils/services/user.api"
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent"
+import { ClipLoader } from "react-spinners"
 
 
 function SearchPage() {
 
     const [input, setInput] = useState('')
+    const [loading, setLoading] = useState(false)
     const [users, setUsers] = useState<FrontendUser[]>([])
 
     const [errorMessage, setErrorMessage] = useState('')
 
     async function handleSearch() {
+        setErrorMessage("")
+        setLoading(true)
         const result = await getSearch(input)
 
         if (result.success && result.data) {
@@ -20,6 +24,7 @@ function SearchPage() {
         } else if (result.error) {
             setErrorMessage(result.error)
         }
+        setLoading(false)
     }
 
     return (
@@ -38,6 +43,13 @@ function SearchPage() {
                         Search
                     </button>
                 </div>
+                <ClipLoader
+                    loading={loading}
+                    color="#009689"
+                    size={25}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
             </div>
             { users.length > 0 &&  <div className="dark:bg-darktheme-3 bg-lighttheme-2 flex flex-col gap-4 overflow-auto scrollbar-none overscroll-contain p-4 lg:w-1/2 w-full h-1/2 rounded-2xl">
 
