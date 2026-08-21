@@ -3,6 +3,7 @@ import { prisma } from '../config/prisma';
 import { ServerError } from '../middleware/errorHandler';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { s3 } from '../utils/s3';
+import { Notifications } from '@activity-manager/types';
 
 const DEFAULT_AVATAR_URL='https://activitymanager-s3-bucket.s3.eu-north-1.amazonaws.com/avatars/Default-user.svg'
 
@@ -229,11 +230,26 @@ export async function getFriends(req: Request, res: Response) {
     return res.status(200).json({success: true, data: friends})
 }
 
-export async function deleteUesr(req: Request, res: Response) {
+export async function deleteUser(req: Request, res: Response) {
     
     await prisma.user.delete({
         where: { id: req.userId },
     })
 
     return res.status(201).json({success: true})
+}
+
+ export async function getNotifications(req: Request, res: Response) {
+    const requests = await prisma.request.findMany({
+        where: { 
+            receiverId: req.userId,
+            status: 'PENDING'
+        },
+    })
+
+    const notifications: Notifications = {
+        requests: requests.length
+    }
+
+    return res.status(201).json({success: true, data: notifications})
 }

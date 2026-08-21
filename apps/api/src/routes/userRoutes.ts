@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addFriend, deleteUesr, getFriends, getProfile, getRequests, getSearch, removeFriend, sendRequest, updateProfile } from "../controllers/userController";
+import { addFriend, deleteUser, getFriends, getNotifications, getProfile, getRequests, getSearch, removeFriend, sendRequest, updateProfile } from "../controllers/userController";
 import { createUpload } from "../utils/s3";
 
 const router = Router()
@@ -36,12 +36,17 @@ router.delete(
 
 router.delete(
     '/',
-    deleteUesr
+    deleteUser
 )
 
 router.post(
     '/send/:userId',
     sendRequest
+)
+
+router.get(
+    '/notifications',
+    getNotifications
 )
 
 router.put(
