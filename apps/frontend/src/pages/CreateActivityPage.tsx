@@ -9,7 +9,6 @@ import { useActivity } from "../context/ActivityContext"
 import { ClipLoader } from "react-spinners"
 
 function CreateActivityPage() {
-
     const [friends, setFriends] = useState<FrontendUser[]>([])
     const [titleinput, setTitleInput] = useState('')
     const [selected, setSelected] = useState<string[]>([])
@@ -43,7 +42,7 @@ function CreateActivityPage() {
             }
         }
         fetchFreinds()
-    })
+    },[])
 
     return (
         <div className="w-full h-full flex flex-col gap-5 items-center justify-center p-5">

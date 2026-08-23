@@ -16,6 +16,8 @@ function FriendComponent({user}: UserComponentProps) {
         const result = await removeFriend(user.id)
         if (result.success) {
             setVisible(false)
+        } else if (result.error) {
+            setErrorMessage(result.error)
         }
     }
 

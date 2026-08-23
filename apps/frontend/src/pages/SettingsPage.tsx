@@ -8,7 +8,7 @@ function SettingsPage() {
 
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [preview, setPreview] = useState('');
-    const [avatar, setAvatar] = useState('');
+    const [avatar, setAvatar] = useState<string | null>(null);
     const [username, setUsername] = useState('');
 
     const [confirmOpen, setConfirmOpen] = useState(false);
@@ -110,6 +110,8 @@ function SettingsPage() {
                             setConfirmOpen(false)
                             handleDelete()
                         }}
+                        needToConfrim={true}
+                        confirmWord="DELETE"
                         header="Are you sure you want to delete your account?"
                     />
                 </div>

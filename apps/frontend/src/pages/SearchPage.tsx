@@ -32,7 +32,7 @@ function SearchPage() {
         <div className="flex flex-col p-5 min-h-0 w-full h-full items-center justify-center">
             <div className="flex flex-col items-center p-4 rounded-xl gap-4 shrink-0">
                 <h1 className="text-2xl font-semibold"> Find Friends </h1>
-                <div className="flex gap-3">
+                <div className="flex lg:flex-row flex-col gap-3">
                     <input 
                         className="dark:bg-darktheme-2 dark:border-none border rounded-2xl outline-none p-2"
                         maxLength={30}

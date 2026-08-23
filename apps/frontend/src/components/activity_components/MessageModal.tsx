@@ -12,7 +12,7 @@ function MessageModal({isOpen, select, deleteMessage}: MessageModalProps) {
     if (!isOpen) { return (<></>)}
 
     return (
-        <div className="flex flex-col dark:bg-darktheme-3 bg-lighttheme-2 absolute top-0 left-0 -translate-y-full -translate-x-30  w-30 gap-1 p-3 rounded-xl">
+        <div className="flex flex-col dark:bg-darktheme-3 bg-lighttheme-2 z-2 absolute top-0 left-0 -translate-y-full -translate-x-30  w-30 gap-1 p-3 rounded-xl">
             <button className="hover:dark:bg-darkhover-1 hover:bg-lighthover-1 rounded-2xl cursor-pointer flex gap-3 "
                 onClick={select}
             >

@@ -3,16 +3,15 @@ import { Bars3Icon } from "@heroicons/react/20/solid";
 import ActivityPanel from "./ActivityPanel";
 import { useAuth } from "../../context/AuthContext";
 import MoreOptionsModal from "./MoreOptionsModal";
-import { getNotifications } from "../../utils/services/user.api";
-import type { Notifications } from "@activity-manager/types";
+import { useActivity } from "../../context/ActivityContext";
 
 function Sidebar() {
 
     const [isOpen, setIsOpen] = useState(true)
     const [moreOptions, setMoreOptions] = useState(false)
-    const [notifications,setNotifications] = useState<Notifications>()
 
     const {user} = useAuth()
+    const {fetchNotifications, notifications} = useActivity()
 
     const ref = useRef<HTMLDivElement>(null)
 
@@ -30,15 +29,9 @@ function Sidebar() {
     }, [moreOptions]);
 
     useEffect(() => {
-        async function fetchNotifications() {
-            const result =  await getNotifications()
-            if (result.success && result.data) {
-                setNotifications(result.data)
-            }
-        }
         fetchNotifications()
     },[])
-
+    
     return (
         <>
             <div className={`

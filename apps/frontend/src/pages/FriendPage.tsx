@@ -7,7 +7,6 @@ import FriendComponent from "../components/simple_components/FriendComponent"
 
 
 function FriendPage() {
-
     const [friends, setFriends] = useState<FrontendUser[]>([])
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -21,7 +20,7 @@ function FriendPage() {
             }
         }
         fetchFreinds()
-    })
+    },[])
 
 
     return (

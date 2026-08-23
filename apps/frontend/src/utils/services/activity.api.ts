@@ -4,7 +4,7 @@ import { handleError } from "./apiErrorHandler"
 
 export async function getActivity(id: string): Promise<ApiResponse<Activity>> {
     try{
-        const response = await api.get<ApiResponse<Activity>>(`api/v1/activity/${id}`)
+        const response = await api.get<ApiResponse<Activity>>(`api/v1/activities/${id}`)
         return response.data
 
     }catch (err) {
@@ -14,7 +14,7 @@ export async function getActivity(id: string): Promise<ApiResponse<Activity>> {
 
 export async function getActivities(): Promise<ApiResponse<Activity[]>> {
     try{
-        const response = await api.get<ApiResponse<Activity[]>>(`api/v1/activity/`)
+        const response = await api.get<ApiResponse<Activity[]>>(`api/v1/activities/`)
         return response.data
 
     }catch (err) {
@@ -24,7 +24,7 @@ export async function getActivities(): Promise<ApiResponse<Activity[]>> {
 
 export async function leaveActivity(id: string): Promise<ApiResponse<null>> {
     try{
-        const response = await api.put<ApiResponse<null>>(`api/v1/activity/${id}`)
+        const response = await api.put<ApiResponse<null>>(`api/v1/activities/${id}`)
         return response.data
 
     }catch (err) {
@@ -34,7 +34,7 @@ export async function leaveActivity(id: string): Promise<ApiResponse<null>> {
 
 export async function createActivity(users: string[], title: string): Promise<ApiResponse<Activity>> {
     try{
-        const response = await api.post<ApiResponse<Activity>>(`api/v1/activity`, {
+        const response = await api.post<ApiResponse<Activity>>(`api/v1/activities`, {
             title,
             users
         })

@@ -82,11 +82,14 @@ function MessageComponent({type, message}: MessageProps) {
                 </div>
                 
                 {type == "user" && !inEdit && 
-                        <button
-                            className="rounded-full h-8 w-8 p-1 dark:bg-darktheme-2 bg-lighttheme-2 relative flex items-center justify-center cursor-pointer"
-                            onClick={() => setModalOpen(!modalOpen)}
-                            >
-                            <EllipsisHorizontalIcon className="h-6= w-6"/>
+                        <div className="relative">
+                            <button
+                                className="rounded-full h-8 w-8 p-1 dark:bg-darktheme-2 bg-lighttheme-2 flex items-center justify-center cursor-pointer"
+                                onClick={() => setModalOpen(!modalOpen)}
+                                >
+                                <EllipsisHorizontalIcon className="h-6= w-6"/>
+                            
+                            </button>
                             <MessageModal 
                                 isOpen={modalOpen} 
                                 select={() => {
@@ -95,7 +98,7 @@ function MessageComponent({type, message}: MessageProps) {
                                 }}
                                 deleteMessage={() => handleDelete()}
                             />
-                        </button>
+                        </div>
                     }
                 {type == "user" && inEdit &&
                         <div className="flex gap-2">
@@ -117,10 +120,12 @@ function MessageComponent({type, message}: MessageProps) {
                                 >
                                 <XMarkIcon className="h-6 w-6"/>
                             </button>
+
+                           
                         </div>
                     }
-            </div>
-    )
+                   
+            </div>)
 }
 
 export default MessageComponent

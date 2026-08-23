@@ -6,10 +6,8 @@ import RequestComponent from "../components/simple_components/RequestComponent"
 
 
 function RequestPage() {
-
     const [requests, setRequests] = useState<FrontendUser[]>([])
     const [errorMessage, setErrorMessage] = useState('')
-
 
     useEffect(() => {
         async function fetchRequests() {
@@ -22,7 +20,7 @@ function RequestPage() {
             }
         }
         fetchRequests()
-    })
+    },[])
 
     return (
         <div className="flex flex-col min-h-0 w-full h-full items-center p-5 justify-center">

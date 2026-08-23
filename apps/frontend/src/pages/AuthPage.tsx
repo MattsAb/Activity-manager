@@ -15,7 +15,7 @@ function AuthPage() {
 
     const [mode, setMode] = useState<'login' | 'register'>('login')
     const [showPassword, setShowPassword] = useState(false)
-    let [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate()
     const {saveUser} = useAuth()

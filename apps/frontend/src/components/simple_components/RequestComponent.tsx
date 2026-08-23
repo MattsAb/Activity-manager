@@ -13,7 +13,7 @@ function RequestComponent({user}: UserComponentProps) {
     const [visible, setVisible] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
 
-    const {fetchActivities} = useActivity()
+    const {fetchActivities, fetchNotifications} = useActivity()
 
     async function handleRequest(answer: "ACCEPTED" | "DECLINED") {
         let result
@@ -25,6 +25,7 @@ function RequestComponent({user}: UserComponentProps) {
         if (result.success) {
             setVisible(false)
             fetchActivities()
+            fetchNotifications()
         } else if (result.error) {
             setErrorMessage(errorMessage)
         }

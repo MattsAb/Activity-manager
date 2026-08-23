@@ -81,7 +81,7 @@ function ActivityPage() {
         <div className="h-screen w-full flex flex-col">
             <div className="w-full flex justify-between dark:bg-darktheme-3 bg-lighttheme-2 p-5 shrink-0">
                 <div className="font-semibold text-2xl flex gap-3">
-                        <h1 >
+                        <h1 className="break-all">
                             {activity?.title}
                         </h1>
                 </div>
@@ -93,6 +93,8 @@ function ActivityPage() {
                     <ArrowRightStartOnRectangleIcon className="w-5 h-5"/>
                 </button>
                 <ConfirmModal
+                    needToConfrim={false}
+                    confirmWord=""
                     header="Are you sure you want to leave this Activity?"
                     isOpen={confirmOpen}
                     cancel={() => setConfirmOpen(false)}
