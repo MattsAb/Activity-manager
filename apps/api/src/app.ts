@@ -4,7 +4,8 @@ import express from 'express';
 import http from 'http'
 import jwt from 'jsonwebtoken'
 import { Server } from 'socket.io'
-
+import helmet from "helmet";
+import { rateLimit } from 'express-rate-limit'
 import authRoutes from './routes/authRoutes'
 import userRoutes from './routes/userRoutes'
 import activityRoutes from './routes/activiyRoutes'
@@ -18,9 +19,17 @@ const io = new Server(server, {
     cors: { origin: process.env.CLIENT_URL }
 })
 
-app.use(cors())
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000,
+	limit: 3, 
+    standardHeaders: 'draft-8',
+    legacyHeaders: false, 	ipv6Subnet: 56,
+ })
 
+app.use(cors())
+app.use(helmet());
 app.use(express.json());
+app.use(limiter)
 
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/user', authMiddleware, userRoutes)

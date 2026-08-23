@@ -28,12 +28,12 @@ export async function login(req: Request, res: Response) {
 
     const passwordIsValid = bcrypt.compareSync(password, user.password)
 
-    if (!passwordIsValid) throw new ServerError(401,"Invalid password")
+    if (!passwordIsValid) throw new ServerError(401,"Wrong password")
 
+    if (!user) throw new ServerError(404, "user with this email doesn's exist")
+    
     const token = createToken(user as BackendUser)
 
-    if (!user) throw new ServerError(404, 'wrong email or password')
-    
     return res.status(200).json({success: true, data: token})
 
 }
