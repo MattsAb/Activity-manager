@@ -56,7 +56,7 @@ function MessageComponent({type, message}: MessageProps) {
     return (
             <div ref={ref} className={`flex gap-3 max-w-1/2  ${type == "user" && 'self-end'}`}>
                 <div className="flex flex-col">
-                    <div className={`${type == "user" ? "dark:bg-app-2 bg-app-1 self-end text-white" : "dark:bg-darktheme-1 bg-lighttheme-2"} rounded-3xl p-3 items-center flex gap-3`}>
+                    <div className={`${type == "user" ? "dark:bg-app-2 bg-app-1 self-end text-white" : "dark:bg-darktheme-1 bg-lighttheme-2"} rounded-xl p-3 items-center flex gap-3`}>
 
                         { !inEdit ? (
                             <div className="flex flex-col">
@@ -72,7 +72,7 @@ function MessageComponent({type, message}: MessageProps) {
                             <textarea
                                 maxLength={250}
                                 rows={3}
-                                className="dark:bg-darktheme-2 bg-lighttheme-1 dark:text-white text-black wrap-break-word min-w-0 w-full rounded-2xl py-1 px-2 outline-none scrollbar-none"
+                                className="dark:bg-darktheme-2 bg-lighttheme-1 dark:text-white text-black wrap-break-word min-w-0 w-full rounded-xl py-1 px-2 outline-none scrollbar-none"
                                 value={editValue}
                                 onChange={(e) => setEditValue(e.target.value)}
                             />

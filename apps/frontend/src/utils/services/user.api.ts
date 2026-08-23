@@ -1,4 +1,4 @@
-import type { ApiResponse, FrontendUser } from "@activity-manager/types"
+import type { ApiResponse, FrontendUser, Notifications } from "@activity-manager/types"
 import api from "../axios"
 import { handleError } from "./apiErrorHandler"
 
@@ -104,6 +104,15 @@ export async function removeFriend(id: string): Promise<ApiResponse<null>> {
 export async function deleteUser(): Promise<ApiResponse<null>> {
     try {
         const response = await api.delete<ApiResponse<null>>(`/api/v1/user`)
+        return response.data
+    } catch (err) {
+        return handleError(err)
+    }
+}
+
+export async function getNotifications(): Promise<ApiResponse<Notifications>> {
+    try {
+        const response = await api.get<ApiResponse<Notifications>>(`/api/v1/user/notifications`)
         return response.data
     } catch (err) {
         return handleError(err)

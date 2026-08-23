@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { createActivity, getActivities, getActivity, leaveActivity} from "../controllers/activityController";
+import { validate } from "../middleware/validateMiddleware";
+import { createActivitySchema } from "../schemas/activity.schema";
 
 
 const router = Router()
@@ -21,7 +23,8 @@ router.put(
 
 router.post(
     '/',
-    createActivity
+    validate(createActivitySchema),
+    createActivity,
 )
 
 export default router

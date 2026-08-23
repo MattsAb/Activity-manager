@@ -82,6 +82,7 @@ function SettingsPage() {
                     <div className="flex flex-col gap-2">
                         <h2 className="font-semibold">Username</h2>
                         <input 
+                            maxLength={30}
                             className="dark:bg-darktheme-2 dark:border-none border p-1 outline-none rounded-xl"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -89,7 +90,7 @@ function SettingsPage() {
                     </div>
                 </div>
                 <div className="flex gap-5 flex-1 md:flex-col flex-row items-end justify-between">
-                    <button className="bg-red-600 p-2 text-white rounded-2xl cursor-pointer"
+                    <button className="dark:bg-darktheme-2 bg-lighttheme-2 px-2 py-1 rounded-xl cursor-pointer"
                          onClick={() => setConfirmOpen(true)}
                     > Delete Account </button>
                     <div className="flex gap-4">
@@ -98,7 +99,7 @@ function SettingsPage() {
                         >
                             Log Out
                         </button>
-                        <button className="bg-app-2 p-2 text-white rounded-2xl cursor-pointer"
+                        <button className="bg-app-2 p-2 text-white rounded-xl cursor-pointer"
                             onClick={() => handleEdit()}
                         > Save </button>
                     </div>

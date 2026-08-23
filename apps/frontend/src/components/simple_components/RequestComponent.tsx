@@ -43,13 +43,13 @@ function RequestComponent({user}: UserComponentProps) {
                 className="flex flex-col md:flex-row gap-3 text-white"
             >
                 <button 
-                    className={`font-semibold "bg-app-2 p-3 bg-app-2 hover:bg-apphover-1 cursor-pointer rounded-full flex justify-self-end`}
+                    className={`font-semibold "bg-app-2 p-3 bg-app-2 hover:bg-apphover-1 cursor-pointer rounded-xl flex justify-self-end`}
                     onClick={() => handleRequest("DECLINED")}
                 >
                     Decline
                 </button>
                 <button 
-                    className={`font-semibold "bg-app-2 p-3 bg-app-2 hover:bg-apphover-1 cursor-pointer rounded-full flex justify-self-end`}
+                    className={`font-semibold "bg-app-2 p-3 bg-app-2 hover:bg-apphover-1 cursor-pointer rounded-xl flex justify-self-end`}
                     onClick={() => handleRequest("ACCEPTED")}
                 >
                     Accept

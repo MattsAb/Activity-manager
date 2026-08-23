@@ -15,6 +15,7 @@ function SearchPage() {
     const [errorMessage, setErrorMessage] = useState('')
 
     async function handleSearch() {
+        if (input === "") return
         setErrorMessage("")
         setLoading(true)
         const result = await getSearch(input)
@@ -34,6 +35,7 @@ function SearchPage() {
                 <div className="flex gap-3">
                     <input 
                         className="dark:bg-darktheme-2 dark:border-none border rounded-2xl outline-none p-2"
+                        maxLength={30}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                     />

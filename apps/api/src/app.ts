@@ -34,7 +34,6 @@ interface TokenPayload {
     id: string
 }
 
-
 io.use((socket, next) => {
     const token = socket.handshake.auth.token
     try {

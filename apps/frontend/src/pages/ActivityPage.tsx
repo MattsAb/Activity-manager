@@ -8,6 +8,7 @@ import { getActivity, leaveActivity } from "../utils/services/activity.api"
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent"
 import { useActivity } from "../context/ActivityContext"
 import ConfirmModal from "../components/simple_components/ConfirmModal"
+import { ArrowRightIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/20/solid"
 
 function ActivityPage() {
 
@@ -85,10 +86,11 @@ function ActivityPage() {
                         </h1>
                 </div>
                 <button 
-                    className="px-3 py-1 rounded-2xl bg-red-600 text-white cursor-pointer"
+                    className="px-3 py-1 rounded-xl flex items-center gap-1 dark:bg-darktheme-2 bg-lighttheme-2 cursor-pointer"
                     onClick={() => setConfirmOpen(true)}
                 >
                     Leave
+                    <ArrowRightStartOnRectangleIcon className="w-5 h-5"/>
                 </button>
                 <ConfirmModal
                     header="Are you sure you want to leave this Activity?"
@@ -121,10 +123,11 @@ function ActivityPage() {
                         rows={2}
                     />
 
-                    <button className="dark:bg-app-2 bg-app-1 hover:dark:bg-apphover-1 text-white p-3 rounded-full font-semibold cursor-pointer"
+                    <button className="dark:bg-app-2 bg-app-1 hover:dark:bg-apphover-1 flex items-center gap-1 text-white px-3 py-2 rounded-xl font-semibold cursor-pointer"
                         onClick={() => handleMessage()}
                     >
                         Send
+                        <ArrowRightIcon className="w-5 h-5"/>
                     </button>
                 </div>
             </div>

@@ -12,3 +12,7 @@ export interface BackendUser {
     email: string
     createdAt: Date
 }
+
+export interface Notifications {
+    requests: number
+}

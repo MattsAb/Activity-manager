@@ -3,11 +3,14 @@ import { Bars3Icon } from "@heroicons/react/20/solid";
 import ActivityPanel from "./ActivityPanel";
 import { useAuth } from "../../context/AuthContext";
 import MoreOptionsModal from "./MoreOptionsModal";
+import { getNotifications } from "../../utils/services/user.api";
+import type { Notifications } from "@activity-manager/types";
 
 function Sidebar() {
 
     const [isOpen, setIsOpen] = useState(true)
     const [moreOptions, setMoreOptions] = useState(false)
+    const [notifications,setNotifications] = useState<Notifications>()
 
     const {user} = useAuth()
 
@@ -26,6 +29,16 @@ function Sidebar() {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [moreOptions]);
 
+    useEffect(() => {
+        async function fetchNotifications() {
+            const result =  await getNotifications()
+            if (result.success && result.data) {
+                setNotifications(result.data)
+            }
+        }
+        fetchNotifications()
+    },[])
+
     return (
         <>
             <div className={`
@@ -36,14 +49,24 @@ function Sidebar() {
                     <div className={`flex w-full items-center justify-between gap-3`}>
                         <div ref={ref} className="flex gap-3 items-center justify-center">
                             <button
-                                className="h-9 w-9 border-2 border-mist-600 items-center flex justify-center rounded-full cursor-pointer"
+                                className="h-9 w-9 border-2 border-mist-600 relative items-center flex justify-center rounded-full cursor-pointer"
                                 onClick={() => setMoreOptions(!moreOptions)}
                             >
                                 <img className="rounded-full w-8 h-8" src={user?.avatarUrl}/>
+                                {notifications?.requests !== undefined 
+                                    && notifications?.requests > 0 
+                                    && !moreOptions &&  
+                                <div 
+                                    className="h-5 w-5 rounded-full flex items-center justify-center left-4 top-4 bg-red-500 border-2 dark:border-darktheme-2 border-lighttheme-1 font-semibold text-white absolute"
+                                >
+                                    {`${notifications?.requests}`}
+                                </div>}
+
                             </button>
 
                             <MoreOptionsModal 
                                 onClose={() => setMoreOptions(false)}
+                                requests={notifications?.requests || 0}
                                 isOpen={moreOptions}
                             />
                             <h1 className={`font-semibold hidden ${isOpen && 'lg:block'}`}> {user?.username} </h1>

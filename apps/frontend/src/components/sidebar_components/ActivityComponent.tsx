@@ -12,7 +12,7 @@ function ActivityComponent({activity, sidebarMode}: ActiviyProps) {
     const goToActivity = () => navigate(`/activity/${activity.id}`)
 
     function getAvatarSize(count: number): number {
-        if (count <= 2) return 40
+        if (count == 2) return 40
         if (count <= 4) return 32
         if (count <= 8) return 24
         return 18
@@ -27,7 +27,7 @@ function ActivityComponent({activity, sidebarMode}: ActiviyProps) {
 
     return (
         <button 
-            className="rounded-full h-22 w-full p-2 hover:dark:bg-darkhover-1 hover:bg-lighthover-1 cursor-pointer flex gap-3 items-center"
+            className="rounded-sm h-20 w-full p-2 hover:dark:bg-darkhover-1 hover:bg-lighthover-1 cursor-pointer flex gap-3 items-center"
             onClick={() => goToActivity()}
             >
             <div className="flex w-20 h-20 relative">

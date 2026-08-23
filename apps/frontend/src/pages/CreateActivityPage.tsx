@@ -52,6 +52,7 @@ function CreateActivityPage() {
                 <h2 className="font-semibold text-xl">Acitivty Name</h2>
                 <input
                     value={titleinput}
+                    maxLength={30}
                     onChange={(e) => setTitleInput(e.target.value)}
                     className="p-2 outline-none rounded-2xl dark:bg-darktheme-3 dark:border-none border"
                     placeholder="activity name..."
@@ -84,12 +85,12 @@ function CreateActivityPage() {
                 data-testid="loader"
             />
             <div className="flex gap-4 text-white">
-                <button className="rounded-2xl bg-app-2 px-3 py-1 text-xl font-semibold cursor-pointer"
+                <button className="rounded-xl bg-app-2 px-3 py-1 text-xl cursor-pointer"
                     onClick={() => goToHome()}
                 >
                     Cancel
                 </button>
-                <button className="rounded-2xl bg-app-2 px-3 py-1 text-xl font-semibold cursor-pointer"
+                <button className="rounded-xl bg-app-2 px-3 py-1 text-xl cursor-pointer"
                     onClick={() => handleCreate()}
                 >
                     Create

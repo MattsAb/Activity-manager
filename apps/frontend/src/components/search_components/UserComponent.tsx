@@ -32,7 +32,7 @@ function UserComponent({user}: UserComponentProps) {
             </div>
             <ErrorMessageComponent errorMessage={errorMessage}/>
             <button 
-                className={`font-semibold ${isAdded ? "dark:bg-darktheme-4 px-2" :"bg-app-2 p-3 hover:bg-apphover-1 text-white cursor-pointer"} rounded-full flex justify-self-end`}
+                className={`font-semibold ${isAdded ? "dark:bg-darktheme-4 px-2" :"bg-app-2 p-3 hover:bg-apphover-1 text-white cursor-pointer"} rounded-xl flex justify-self-end`}
                 onClick={() => handleSend()}
             >
                 {isAdded ? "Sent" : "Send request"}

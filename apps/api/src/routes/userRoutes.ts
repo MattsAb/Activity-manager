@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { addFriend, deleteUser, getFriends, getNotifications, getProfile, getRequests, getSearch, removeFriend, sendRequest, updateProfile } from "../controllers/userController";
 import { createUpload } from "../utils/s3";
+import { validate } from "../middleware/validateMiddleware";
+import { searchSchema, updateProfileSchema } from "../schemas/user.schema";
 
 const router = Router()
 
@@ -16,6 +18,7 @@ router.get(
 
 router.get(
     '/search',
+    validate(searchSchema),
     getSearch
 )
 
@@ -52,6 +55,7 @@ router.get(
 router.put(
     '/profile',
     createUpload().single('avatar'),
+    validate(updateProfileSchema),
     updateProfile
 )
 
