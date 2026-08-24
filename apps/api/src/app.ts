@@ -21,7 +21,7 @@ const io = new Server(server, {
 
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000,
-	limit: 3, 
+	limit: 500, 
     standardHeaders: 'draft-8',
     legacyHeaders: false, 	ipv6Subnet: 56,
  })
@@ -33,7 +33,7 @@ app.use(limiter)
 
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/user', authMiddleware, userRoutes)
-app.use('/api/v1/activity', authMiddleware, activityRoutes)
+app.use('/api/v1/activities', authMiddleware, activityRoutes)
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });

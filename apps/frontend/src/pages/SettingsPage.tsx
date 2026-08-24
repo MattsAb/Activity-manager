@@ -8,7 +8,7 @@ function SettingsPage() {
 
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [preview, setPreview] = useState('');
-    const [avatar, setAvatar] = useState<string | null>(null);
+    const [avatar, setAvatar] = useState<string | undefined>(undefined);
     const [username, setUsername] = useState('');
 
     const [confirmOpen, setConfirmOpen] = useState(false);

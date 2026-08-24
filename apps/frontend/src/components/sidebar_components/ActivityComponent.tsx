@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom"
 type ActiviyProps = {
     activity: Activity
     sidebarMode: "SMALL" | "LARGE"
+    onSelect: () => void
 }
 
-function ActivityComponent({activity, sidebarMode}: ActiviyProps) {
+function ActivityComponent({activity, sidebarMode, onSelect}: ActiviyProps) {
     const navigate = useNavigate()
 
-    const goToActivity = () => navigate(`/activity/${activity.id}`)
+    const goToActivity = () => {
+        onSelect()
+        navigate(`/activity/${activity.id}`)
+    }
 
     function getAvatarSize(count: number): number {
         if (count == 2) return 40
@@ -49,7 +53,7 @@ function ActivityComponent({activity, sidebarMode}: ActiviyProps) {
                     )
                 })}
             </div>
-            {sidebarMode === "LARGE" && <h1 className="hidden lg:flex">{activity.title}</h1> }
+            {sidebarMode === "LARGE" && <h1>{activity.title}</h1> }
         </button>
     )
 }

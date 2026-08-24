@@ -5,7 +5,7 @@ import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { s3 } from '../utils/s3';
 import { Notifications } from '@activity-manager/types';
 
-const DEFAULT_AVATAR_URL='https://activitymanager-s3-bucket.s3.eu-north-1.amazonaws.com/avatars/Default-user.svg'
+const DEFAULT_AVATAR_URL='https://activitymanager-s3-bucket.s3.eu-north-1.amazonaws.com/avatars/Default-user.png'
 
 export async function addFriend(req: Request, res: Response) {
     const userId = req.params.userId

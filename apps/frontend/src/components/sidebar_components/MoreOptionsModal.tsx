@@ -20,7 +20,7 @@ function MoreOptionsModal ({isOpen,onClose, requests}: MoreOptionsProps) {
     const goToSettings = () => navigate('/settings')
 
     return (
-        <div className="flex flex-col dark:bg-darktheme-3 bg-lighttheme-2 z-20 absolute top-60 left-10 w-40 p-2 -translate-y-full gap-1 rounded-sm">
+        <div className="flex flex-col dark:bg-darktheme-3 bg-lighttheme-2 z-20 absolute top-60 w-40 p-2 right-10 border dark:border-darktheme-1 -translate-y-full gap-1 rounded-sm">
             <button className="hover:dark:bg-darkhover-1 hover:bg-lighthover-1  items-center  cursor-pointer flex gap-3 p-1"
                 onClick={() => {
                     goToSearch()

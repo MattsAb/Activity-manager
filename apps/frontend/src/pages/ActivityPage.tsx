@@ -78,7 +78,7 @@ function ActivityPage() {
     }
 
     return (
-        <div className="h-screen w-full flex flex-col">
+        <div className="h-full w-full flex flex-col">
             <div className="w-full flex justify-between dark:bg-darktheme-3 bg-lighttheme-2 p-5 shrink-0">
                 <div className="font-semibold text-2xl flex gap-3">
                         <h1 className="break-all">

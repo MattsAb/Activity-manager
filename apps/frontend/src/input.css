@@ -25,3 +25,7 @@
 
     --font-default: "serif"
 }
+html, body, #root {
+  height: 100%;
+  overflow: hidden; 
+}
