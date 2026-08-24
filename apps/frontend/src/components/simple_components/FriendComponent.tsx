@@ -1,0 +1,47 @@
+import type { FrontendUser } from "@activity-manager/types"
+import { useState } from "react"
+import ErrorMessageComponent from "../simple_components/ErrorMessageComponent"
+import { removeFriend } from "../../utils/services/user.api"
+
+type UserComponentProps = {
+    user: FrontendUser
+}
+
+function FriendComponent({user}: UserComponentProps) {
+
+    const [visible, setVisible] = useState(true)
+    const [errorMessage, setErrorMessage] = useState('')
+
+    async function handleUnfriend() {
+        const result = await removeFriend(user.id)
+        if (result.success) {
+            setVisible(false)
+        } else if (result.error) {
+            setErrorMessage(result.error)
+        }
+    }
+
+    if (!visible) return (<></>)
+
+    return (
+        <div className="w-full rounded-xl dark:bg-darktheme-2 p-3 justify-between flex items-center">
+            <div className="flex items-center gap-3">
+                <img src={user.avatarUrl} className="w-15 h-15 rounded-full"/>
+                <h1 className="font-semibold text-2xl">{user.username}</h1>
+            </div>
+            <ErrorMessageComponent errorMessage={errorMessage}/>
+            <div
+                className="flex flex-col md:flex-row gap-3 text-white"
+            >
+                <button 
+                    className={`font-semibold "bg-app-2 p-3 bg-app-2 hover:bg-apphover-1 cursor-pointer rounded-full flex justify-self-end`}
+                    onClick={() => handleUnfriend()}
+                >
+                    Remove Friend
+                </button>
+            </div>
+        </div>
+    )
+}
+
+export default FriendComponent

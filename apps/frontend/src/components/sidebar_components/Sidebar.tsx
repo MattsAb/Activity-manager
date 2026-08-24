@@ -1,43 +1,39 @@
-import { useState } from "react";
-import { Bars3Icon } from "@heroicons/react/20/solid";
+import { useEffect } from "react";
 import ActivityPanel from "./ActivityPanel";
-import { useNavigate } from "react-router-dom";
+import { useActivity } from "../../context/ActivityContext";
 
-function Sidebar() {
+type SidebarProps = {
+    isOpen: boolean
+    onClose: () => void
+}
 
-    const [isOpen, setIsOpen] = useState(true)
+function Sidebar({isOpen, onClose}: SidebarProps) {
 
-    const navigate = useNavigate()
 
-    const goToSettings = () => navigate('/settings')
+    const {fetchNotifications} = useActivity()
 
+    useEffect(() => {
+        fetchNotifications()
+    },[])
+    
     return (
         <>
-            <div className={`
-                    sticky z-40 w-30 ${isOpen && 'lg:w-70'}
-                    h-screen dark:bg-darktheme-4 bg-lighttheme-1 dark:text-white flex-col items-center gap-3 border-r dark:border-darktheme-2
+            {isOpen && (
+                <div
+                    className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+                    onClick={onClose}
+                />
+            )}
+                <div className={`
+                    ${isOpen ? 'fixed' : 'hidden'}
+                    lg:flex lg:sticky lg:top-0 z-40 ${isOpen ? 'w-70' : 'sm:w-25'}
+                    h-screen pt-1 dark:bg-darktheme-4 bg-lighttheme-1 dark:text-white flex-col items-center gap-3 border-r border-mist-700
                 `}>
-                <div className="flex-col flex items-center w-full h-screen pt-2 px-2 gap-3">
-                    <div className={`flex w-full items-center justify-between gap-3`}>
-                        <div className="flex gap-3 items-center justify-center">
-                            <button 
-                                className="bg-slate-600 h-8 w-8 rounded-full cursor-pointer"
-                                onClick={() => goToSettings()}
-                            >
-
-                            </button>
-                            <h1 className={`font-semibold hidden ${isOpen && 'lg:block'}`}> Username </h1>
-                        </div>
-                        <button 
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="flex justify-center items-center cursor-pointer rounded-full"
-                        >
-                            <Bars3Icon className="w-8 h-8"/>
-                        </button>
-                    </div>
-                    <div className="flex-1 min-h-0 w-full">
-                        <ActivityPanel/>
-                    </div>
+                    <div className="flex-1 min-h-0 h-full w-full">
+                        <ActivityPanel 
+                            sidebarMode={isOpen ? "LARGE" : "SMALL"}
+                            onClose={onClose}
+                    />
                 </div>
             </div>
         </>

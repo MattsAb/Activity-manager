@@ -1,0 +1,63 @@
+import type { FrontendUser } from "@activity-manager/types"
+import { useState } from "react"
+import ErrorMessageComponent from "../simple_components/ErrorMessageComponent"
+import { addFriend, declineRequest } from "../../utils/services/user.api"
+import { useActivity } from "../../context/ActivityContext"
+
+type UserComponentProps = {
+    user: FrontendUser
+}
+
+function RequestComponent({user}: UserComponentProps) {
+
+    const [visible, setVisible] = useState(true)
+    const [errorMessage, setErrorMessage] = useState('')
+
+    const {fetchActivities, fetchNotifications} = useActivity()
+
+    async function handleRequest(answer: "ACCEPTED" | "DECLINED") {
+        let result
+        if (answer == "ACCEPTED"){
+            result = await addFriend(user.id)
+        } else {
+            result = await declineRequest(user.id)
+        }
+        if (result.success) {
+            setVisible(false)
+            fetchActivities()
+            fetchNotifications()
+        } else if (result.error) {
+            setErrorMessage(errorMessage)
+        }
+    }
+
+    if (!visible) return (<></>)
+
+    return (
+        <div className="w-full rounded-xl dark:bg-darktheme-2 p-3 justify-between flex items-center">
+            <div className="flex items-center gap-3">
+                <img src={user.avatarUrl} className="w-15 h-15 rounded-full"/>
+                <h1 className="font-semibold text-2xl">{user.username}</h1>
+            </div>
+            <ErrorMessageComponent errorMessage={errorMessage}/>
+            <div
+                className="flex flex-col md:flex-row gap-3 text-white"
+            >
+                <button 
+                    className={`font-semibold "bg-app-2 p-3 bg-app-2 hover:bg-apphover-1 cursor-pointer rounded-xl flex justify-self-end`}
+                    onClick={() => handleRequest("DECLINED")}
+                >
+                    Decline
+                </button>
+                <button 
+                    className={`font-semibold "bg-app-2 p-3 bg-app-2 hover:bg-apphover-1 cursor-pointer rounded-xl flex justify-self-end`}
+                    onClick={() => handleRequest("ACCEPTED")}
+                >
+                    Accept
+                </button>
+            </div>
+        </div>
+    )
+}
+
+export default RequestComponent
