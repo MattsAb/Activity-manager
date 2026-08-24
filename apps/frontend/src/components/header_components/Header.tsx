@@ -37,7 +37,7 @@ function Header({isOpen, setIsOpen}: headerProps) {
     
 
     return (
-        <div className=" dark:bg-darktheme-4 shrink-0 py-1 w-full z-51 border-b dark:border-darktheme-2 flex items-center">
+        <div className=" dark:bg-darktheme-4 bg-lighttheme-1 shrink-0 py-1 w-full z-51 border-b dark:border-darktheme-2 flex items-center">
                      <div className={`flex w-full justify-between px-5 items-center gap-3`}>
                         <button 
                             onClick={() => setIsOpen(!isOpen)}

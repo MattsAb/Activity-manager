@@ -4,7 +4,7 @@ import Header from "./header_components/Header";
 import { useState } from "react";
 
 function AppLayout() {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div className="flex flex-col h-screen min-h-0 dark:bg-darktheme-4 bg-lighttheme-1 text-black dark:text-white font-default">

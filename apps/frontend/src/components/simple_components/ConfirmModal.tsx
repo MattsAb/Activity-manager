@@ -14,7 +14,7 @@ function ConfirmModal({isOpen, confirm, cancel, header, confirmWord, needToConfr
     if (!isOpen) return
 
     return (
-        <div className="w-full h-full fixed left-0 right-0 top-0 bottom-0 flex z-100 items-center justify-center  bg-black/50">
+        <div className="w-full h-full fixed left-0 right-0 top-0 bottom-0 px-2 flex z-100 items-center justify-center  bg-black/50">
             <div className="flex gap-10 flex-col items-center dark:bg-darktheme-4 bg-lighttheme-1 p-4 rounded-sm">
                 <h1 className="text-xl font-semibold">{header}</h1>
                 {needToConfrim && <div className="flex flex-col gap-3">

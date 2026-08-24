@@ -27,7 +27,7 @@ function Sidebar({isOpen, onClose}: SidebarProps) {
                 <div className={`
                     ${isOpen ? 'fixed' : 'hidden'}
                     lg:flex lg:sticky lg:top-0 z-40 ${isOpen ? 'w-70' : 'sm:w-25'}
-                    h-screen pt-1 dark:bg-mist-900 dark:text-white flex-col items-center gap-3 border-r border-mist-700
+                    h-screen pt-1 dark:bg-darktheme-4 bg-lighttheme-1 dark:text-white flex-col items-center gap-3 border-r border-mist-700
                 `}>
                     <div className="flex-1 min-h-0 h-full w-full">
                         <ActivityPanel 
