@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getMe, login, register } from "../controllers/AuthController";
+import { deleteUser, getMe, login, register } from "../controllers/AuthController";
 import authMiddleware from "../middleware/authMIddleware";
 import { loginSchema, registerSchema } from "../schemas/auth.schema";
 import { validate } from "../middleware/validateMiddleware";
@@ -22,6 +22,12 @@ router.get(
     '/me',
     authMiddleware,
     getMe
+)
+
+router.delete(
+    '/',
+    authMiddleware,
+    deleteUser
 )
 
 export default router

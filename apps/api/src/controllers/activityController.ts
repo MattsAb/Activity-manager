@@ -85,7 +85,6 @@ export async function leaveActivity(req: Request, res: Response) {
 
 
 export async function createActivity(req: Request, res: Response) {
-    console.log('hey')
     const title = req.body.title
     const users: string[] = req.body.users
 

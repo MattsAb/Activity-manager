@@ -101,14 +101,6 @@ export async function removeFriend(id: string): Promise<ApiResponse<null>> {
     }
 }
 
-export async function deleteUser(): Promise<ApiResponse<null>> {
-    try {
-        const response = await api.delete<ApiResponse<null>>(`/api/v1/user`)
-        return response.data
-    } catch (err) {
-        return handleError(err)
-    }
-}
 
 export async function getNotifications(): Promise<ApiResponse<Notifications>> {
     try {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addFriend, deleteUser, getFriends, getNotifications, getProfile, getRequests, getSearch, removeFriend, sendRequest, updateProfile } from "../controllers/userController";
+import { addFriend, getFriends, getNotifications, getProfile, getRequests, getSearch, removeFriend, sendRequest, updateProfile } from "../controllers/userController";
 import { createUpload } from "../utils/s3";
 import { validate } from "../middleware/validateMiddleware";
 import { searchSchema, updateProfileSchema } from "../schemas/user.schema";
@@ -37,10 +37,6 @@ router.delete(
     removeFriend
 )
 
-router.delete(
-    '/',
-    deleteUser
-)
 
 router.post(
     '/send/:userId',

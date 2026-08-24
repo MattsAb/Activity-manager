@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { deleteUser, editUserProfile, getProfile } from "../utils/services/user.api";
+import { editUserProfile, getProfile } from "../utils/services/user.api";
 import ErrorMessageComponent from "../components/simple_components/ErrorMessageComponent";
 import ConfirmModal from "../components/simple_components/ConfirmModal";
+import { deleteUser } from "../utils/services/auth.api";
 
 function SettingsPage() {
 

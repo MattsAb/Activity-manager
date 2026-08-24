@@ -55,7 +55,6 @@ io.use((socket, next) => {
 })
 
 io.on('connection', (socket) => {
-    console.log('User connected:', socket.data.userId)
 
     socket.on('join_channel', (channelId: string) => {
         socket.join(channelId)
@@ -113,8 +112,5 @@ io.on('connection', (socket) => {
       io.to(data.activityId).emit('deleted_message', message)
   })
 
-    socket.on('disconnect', () => {
-        console.log('User disconnected:', socket.data.userId)
-    })
 })
 export default server

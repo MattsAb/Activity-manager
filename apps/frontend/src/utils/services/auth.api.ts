@@ -42,3 +42,12 @@ export async function getMe (): Promise<ApiResponse<FrontendUser>> {
         return handleError(err)
     }
 }
+
+export async function deleteUser(): Promise<ApiResponse<null>> {
+    try {
+        const response = await api.delete<ApiResponse<null>>(`/api/v1/auth`)
+        return response.data
+    } catch (err) {
+        return handleError(err)
+    }
+}

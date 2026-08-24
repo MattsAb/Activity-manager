@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken'
 import { ServerError } from '../middleware/errorHandler';
 import { BackendUser} from '@activity-manager/types';
 
-
 function createToken(user: BackendUser): string {
     const jwtSecret = process.env.JWT_SECRET
     if (!jwtSecret) {
@@ -24,14 +23,12 @@ export async function login(req: Request, res: Response) {
         }
     })
 
-    if (!user) { return res.status(404).send({ message: "User not found" }) }
+    if (!user) throw new ServerError(404, "user with this email doesn's exist")
 
     const passwordIsValid = bcrypt.compareSync(password, user.password)
 
     if (!passwordIsValid) throw new ServerError(401,"Wrong password")
 
-    if (!user) throw new ServerError(404, "user with this email doesn's exist")
-    
     const token = createToken(user as BackendUser)
 
     return res.status(200).json({success: true, data: token})
@@ -76,4 +73,13 @@ export async function getMe(req: Request, res: Response) {
     if (!user) throw new ServerError(404, "Not found")
 
     res.status(200).json({success: true, data: user})
+}
+
+export async function deleteUser(req: Request, res: Response) {
+    
+    await prisma.user.delete({
+        where: { id: req.userId },
+    })
+
+    return res.status(200).json({success: true})
 }

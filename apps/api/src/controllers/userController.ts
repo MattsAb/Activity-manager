@@ -230,15 +230,6 @@ export async function getFriends(req: Request, res: Response) {
     return res.status(200).json({success: true, data: friends})
 }
 
-export async function deleteUser(req: Request, res: Response) {
-    
-    await prisma.user.delete({
-        where: { id: req.userId },
-    })
-
-    return res.status(201).json({success: true})
-}
-
  export async function getNotifications(req: Request, res: Response) {
     const requests = await prisma.request.findMany({
         where: { 
