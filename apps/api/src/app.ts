@@ -13,6 +13,10 @@ import activityRoutes from './routes/activiyRoutes'
 import authMiddleware from './middleware/authMIddleware';
 import { prisma } from './config/prisma';
 
+interface TokenPayload {
+    id: string
+}
+
 const app = express();
 const server = http.createServer(app)
 const io = new Server(server, {
@@ -35,13 +39,9 @@ app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/user', authMiddleware, userRoutes)
 app.use('/api/v1/activities', authMiddleware, activityRoutes)
 
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
-
-interface TokenPayload {
-    id: string
-}
 
 io.use((socket, next) => {
     const token = socket.handshake.auth.token

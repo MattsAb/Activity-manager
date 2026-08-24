@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../config/prisma';
 import { ServerError } from '../middleware/errorHandler';
-import { FrontendUser } from '@activity-manager/types';
+
 
 export async function getActivity(req: Request, res: Response) {
     const activityId = req.params.id
