@@ -23,7 +23,7 @@ export async function login(req: Request, res: Response) {
         }
     })
 
-    if (!user) throw new ServerError(404, "user with this email doesn's exist")
+    if (!user) throw new ServerError(404, "user with this email does not exist")
 
     const passwordIsValid = bcrypt.compareSync(password, user.password)
 

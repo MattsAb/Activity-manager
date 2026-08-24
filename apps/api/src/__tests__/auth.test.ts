@@ -99,7 +99,7 @@ describe("login user", () => {
 
        
         await expect(login(mockRequest as Request, mockResponse as Response))
-            .rejects.toThrow("user with this email doesn's exist")
+            .rejects.toThrow("user with this email does not exist")
 
         expect(prisma.user.findUnique).toHaveBeenCalledTimes(1)
         expect(bcrypt.compareSync).not.toHaveBeenCalled()

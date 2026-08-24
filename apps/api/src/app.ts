@@ -12,6 +12,7 @@ import activityRoutes from './routes/activiyRoutes'
 
 import authMiddleware from './middleware/authMIddleware';
 import { prisma } from './config/prisma';
+import errorHandler from './middleware/errorHandler';
 
 interface TokenPayload {
     id: string
@@ -42,6 +43,8 @@ app.use('/api/v1/activities', authMiddleware, activityRoutes)
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
+
+app.use(errorHandler)
 
 io.use((socket, next) => {
     const token = socket.handshake.auth.token
