@@ -1,5 +1,5 @@
-import { Message } from "./messageTypes"
-import { FrontendUser } from "./userTypes"
+import type { Message } from "./messageTypes"
+import type { FrontendUser } from "./userTypes"
 
 export interface Activity {
     id: string

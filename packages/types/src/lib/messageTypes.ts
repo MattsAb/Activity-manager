@@ -1,4 +1,4 @@
-import { FrontendUser } from "./userTypes"
+import type { FrontendUser } from "./userTypes"
 
 export interface Message {
     id: string
