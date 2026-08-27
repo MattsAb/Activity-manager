@@ -31,7 +31,7 @@ const limiter = rateLimit({
     legacyHeaders: false, 	ipv6Subnet: 56,
  })
 
-app.use(cors())
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 app.use(helmet());
 app.use(express.json());
 app.use(limiter)
@@ -44,7 +44,7 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
-app.use(errorHandler) 
+app.use(errorHandler)
 
 io.use((socket, next) => {
     const token = socket.handshake.auth.token
