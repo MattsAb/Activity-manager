@@ -1,5 +1,5 @@
 import type { FrontendUser } from "@activity-manager/types"
-import { use, useState } from "react"
+import {useState } from "react"
 import ErrorMessageComponent from "../simple_components/ErrorMessageComponent"
 import { sendRequest } from "../../utils/services/user.api"
 
