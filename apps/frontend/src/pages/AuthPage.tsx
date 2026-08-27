@@ -45,6 +45,7 @@ async function handleAuth() {
 }
     return(
         <div className="w-screen h-screen flex flex-col dark:text-white  items-center justify-center bg-lighthover-1 dark:bg-darktheme-4">
+            <h1 className="mb-5 font-semibold text-2xl">Activity Manager</h1>
             <div className="dark:bg-darktheme-3 bg-lighttheme-1 flex flex-col gap-5 items-center p-5 rounded-2xl text-xl">
                 <h1 className="font-semibold text-2xl">{mode == 'login' ? 'Log In' : 'Register'}</h1>
                 {    mode == "register" &&
