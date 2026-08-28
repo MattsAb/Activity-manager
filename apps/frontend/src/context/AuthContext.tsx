@@ -17,21 +17,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<FrontendUser | null>(null)
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        const token = localStorage.getItem('idToken');
-        if (token) {
-        getMe().then((res) => {
-            if (res.success && res.data) {
-                setUser(res.data);
+useEffect(() => {
+    const token = localStorage.getItem('idToken')
+    if (token) {
+        getMe()
+            .then((res) => {
+                if (res.success && res.data) {
+                    setUser(res.data)
+                } else {
+                    localStorage.removeItem('idToken')
+                }
+            })
+            .catch(() => {
+                localStorage.removeItem('idToken')
+            })
+            .finally(() => {
                 setIsLoading(false)
-            }
-            else {
-                localStorage.removeItem('idToken');
-                setIsLoading(false)
-            }
-        });
-        }
-    }, []);
+            })
+    } else {
+        setIsLoading(false)
+    }
+}, [])
 
     useEffect(() => {
         if (user) {
